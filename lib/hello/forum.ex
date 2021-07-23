@@ -6,7 +6,7 @@ defmodule Hello.Forum do
   import Ecto.Query, warn: false
   alias Hello.Repo
 
-  alias Hello.Forum.{Board, Thread}
+  alias Hello.Forum.{Board, Thread, Post}
 
   @doc """
   Returns the list of boards.
@@ -133,7 +133,11 @@ defmodule Hello.Forum do
       ** (Ecto.NoResultsError)
 
   """
-  def get_thread!(id), do: Repo.get!(Thread, id)
+  def get_thread!(id) do
+    Thread
+    |>Repo.get!(id)
+    |> Repo.preload(:posts)
+  end
 
   @doc """
   Creates a thread.
@@ -201,7 +205,6 @@ defmodule Hello.Forum do
     Thread.changeset(thread, attrs)
   end
 
-  alias Hello.Forum.Post
 
   @doc """
   Returns the list of posts.
@@ -244,9 +247,10 @@ defmodule Hello.Forum do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_post(attrs \\ %{}) do
+  def create_post(thread, attrs \\ %{}) do
     %Post{}
     |> Post.changeset(attrs)
+    |> Ecto.Changeset.put_assoc(:thread, thread)
     |> Repo.insert()
   end
 

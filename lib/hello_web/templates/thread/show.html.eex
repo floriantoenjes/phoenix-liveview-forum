@@ -7,6 +7,10 @@
     <%= @thread.title %>
   </li>
 
+  <%= for post <- @thread.posts do %>
+  <li><%= link post.content, to: Routes.board_thread_post_path(@conn, :show, @board_id, @thread.id, post.id) %></li>
+  <% end %>
+
 </ul>
 
 <span><%= link "Edit", to: Routes.board_thread_path(@conn, :edit, @board_id, @thread) %></span>

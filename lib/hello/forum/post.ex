@@ -2,9 +2,11 @@ defmodule Hello.Forum.Post do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias Hello.Forum.Thread
+
   schema "posts" do
     field :content, :string
-    field :thread_id, :id
+    belongs_to :thread, Thread
 
     timestamps()
   end
