@@ -50,5 +50,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Elixir at /usr/lib/elixir" level="application" />
+    <orderEntry type="library" name="Elixir at /usr/lib/elixir" level="application" />
+    <orderEntry type="library" name="Elixir at /usr/lib/elixir" level="application" />
   </component>
 </module>

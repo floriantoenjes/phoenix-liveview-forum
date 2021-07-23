@@ -1,0 +1,13 @@
+<h1>Show Thread</h1>
+
+<ul>
+
+  <li>
+    <strong>Title:</strong>
+    <%= @thread.title %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.thread_path(@conn, :edit, @thread) %></span>
+<span><%= link "Back", to: Routes.thread_path(@conn, :index) %></span>

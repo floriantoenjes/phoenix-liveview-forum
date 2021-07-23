@@ -1,0 +1,5 @@
+<h1>Edit Thread</h1>
+
+<%= render "form.html", Map.put(assigns, :action, Routes.thread_path(@conn, :update, @thread)) %>
+
+<span><%= link "Back", to: Routes.thread_path(@conn, :index) %></span>

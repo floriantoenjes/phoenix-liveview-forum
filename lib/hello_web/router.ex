@@ -26,6 +26,14 @@ defmodule HelloWeb.Router do
   #   pipe_through :api
   # end
 
+  scope "/boards", HelloWeb do
+    pipe_through [:browser, :authenticate_user]
+
+    resources "/", BoardController do
+      resources "/threads", ThreadController
+    end
+  end
+
   # Enables LiveDashboard only for development
   #
   # If you want to use the LiveDashboard in production, you should put

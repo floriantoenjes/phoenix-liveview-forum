@@ -1,0 +1,13 @@
+<h1>Show Board</h1>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @board.name %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.board_path(@conn, :edit, @board) %></span>
+<span><%= link "Back", to: Routes.board_path(@conn, :index) %></span>
