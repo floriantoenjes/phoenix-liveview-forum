@@ -15,7 +15,8 @@ defmodule HelloWeb.ThreadController do
   end
 
   def create(conn, %{"board_id" => board_id, "thread" => thread_params}) do
-    case Forum.create_thread(thread_params) do
+    board = Forum.get_board!(board_id)
+    case Forum.create_thread(board, thread_params) do
       {:ok, thread} ->
         conn
         |> put_flash(:info, "Thread created successfully.")

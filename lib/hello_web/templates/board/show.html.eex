@@ -7,6 +7,10 @@
     <%= @board.name %>
   </li>
 
+  <%= for thread <- @board.threads do %>
+    <li><%= thread.title %></li>
+  <% end %>
+
 </ul>
 
 <span><%= link "Edit", to: Routes.board_path(@conn, :edit, @board) %></span>
