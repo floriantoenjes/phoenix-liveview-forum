@@ -1,0 +1,5 @@
+<h1>Edit Post</h1>
+
+<%= render "form.html", Map.put(assigns, :action, Routes.board_thread_post_path(@conn, :update, @board_id, @thread_id, @post)) %>
+
+<span><%= link "Back", to: Routes.board_thread_post_path(@conn, :index, @board_id, @thread_id ) %></span>

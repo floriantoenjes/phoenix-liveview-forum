@@ -1,0 +1,13 @@
+<h1>Show Post</h1>
+
+<ul>
+
+  <li>
+    <strong>Content:</strong>
+    <%= @post.content %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.board_thread_post_path(@conn, :edit, @board_id, @thread_id, @post) %></span>
+<span><%= link "Back", to: Routes.board_thread_post_path(@conn, :index, @board_id, @thread_id) %></span>

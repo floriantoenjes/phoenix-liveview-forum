@@ -1,0 +1,26 @@
+<h1>Listing Posts</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Content</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for post <- @posts do %>
+    <tr>
+      <td><%= post.content %></td>
+
+      <td>
+        <span><%= link "Show", to: Routes.board_thread_post_path(@conn, :show, post, @board_id, @thread_id) %></span>
+        <span><%= link "Edit", to: Routes.board_thread_post_path(@conn, :edit, post, @board_id, @thread_id) %></span>
+        <span><%= link "Delete", to: Routes.board_thread_post_path(@conn, :delete, post, @board_id, @thread_id), method: :delete, data: [confirm: "Are you sure?"] %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Post", to: Routes.board_thread_post_path(@conn, :new, @board_id, @thread_id) %></span>

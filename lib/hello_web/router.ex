@@ -30,7 +30,9 @@ defmodule HelloWeb.Router do
     pipe_through [:browser, :authenticate_user]
 
     resources "/", BoardController do
-      resources "/threads", ThreadController
+      resources "/threads", ThreadController do
+        resources "/posts", PostController
+      end
     end
   end
 
