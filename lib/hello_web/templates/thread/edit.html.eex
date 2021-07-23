@@ -1,5 +1,5 @@
 <h1>Edit Thread</h1>
 
-<%= render "form.html", Map.put(assigns, :action, Routes.thread_path(@conn, :update, @thread)) %>
+<%= render "form.html", Map.put(assigns, :action, Routes.board_thread_path(@conn, :update, @board_id, @thread)) %>
 
-<span><%= link "Back", to: Routes.thread_path(@conn, :index) %></span>
+<span><%= link "Back", to: Routes.board_thread_path(@conn, :index, @board_id) %></span>

@@ -4,6 +4,7 @@ defmodule Hello.Repo.Migrations.CreateThreads do
   def change do
     create table(:threads) do
       add :title, :string
+      add :board_id, references(:boards, on_delete: :nothing)
 
       timestamps()
     end

@@ -9,5 +9,5 @@
 
 </ul>
 
-<span><%= link "Edit", to: Routes.thread_path(@conn, :edit, @thread) %></span>
-<span><%= link "Back", to: Routes.thread_path(@conn, :index) %></span>
+<span><%= link "Edit", to: Routes.board_thread_path(@conn, :edit, @board_id, @thread) %></span>
+<span><%= link "Back", to: Routes.board_thread_path(@conn, :index, @board_id) %></span>
