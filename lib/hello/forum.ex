@@ -137,7 +137,7 @@ defmodule Hello.Forum do
   """
   def get_thread!(id) do
     Thread
-    |>Repo.get!(id)
+    |> Repo.get!(id)
     |> Repo.preload(:posts, author: [user: :credential])
   end
 
@@ -219,7 +219,9 @@ defmodule Hello.Forum do
 
   """
   def list_posts do
-    Repo.all(Post)
+    Post
+    |> Repo.all()
+    |> Repo.preload(author: [user: :credential])
   end
 
   @doc """
@@ -236,7 +238,11 @@ defmodule Hello.Forum do
       ** (Ecto.NoResultsError)
 
   """
-  def get_post!(id), do: Repo.get!(Post, id)
+  def get_post!(id) do
+    Post
+    |> Repo.get!(id)
+    |> Repo.preload(author: [user: :credential])
+  end
 
   @doc """
   Creates a post.
@@ -250,9 +256,10 @@ defmodule Hello.Forum do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_post(thread, attrs \\ %{}) do
+  def create_post(%Member{} = author, thread, attrs \\ %{}) do
     %Post{}
     |> Post.changeset(attrs)
+    |> Ecto.Changeset.put_change(:author_id, author.id)
     |> Ecto.Changeset.put_assoc(:thread, thread)
     |> Repo.insert()
   end

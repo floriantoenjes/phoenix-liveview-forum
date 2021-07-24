@@ -19,7 +19,7 @@ defmodule HelloWeb.PostController do
 
   def create(conn, %{"board_id" => board_id, "thread_id" => thread_id, "post" => post_params}) do
     thread = Forum.get_thread!(thread_id)
-    case Forum.create_post(thread, post_params) do
+    case Forum.create_post(conn.assigns.current_author, thread, post_params) do
       {:ok, post} ->
         conn
         |> put_flash(:info, "Post created successfully.")
