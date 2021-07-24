@@ -7,7 +7,7 @@ defmodule HelloWeb.BoardController do
 
   def index(conn, _params) do
     boards = Forum.list_boards()
-    live_render(conn, HelloWeb.PageLive, boards: boards)
+    live_render(conn, HelloWeb.BoardsLive, session: %{"boards" => boards})
   end
 
   def new(conn, _params) do
