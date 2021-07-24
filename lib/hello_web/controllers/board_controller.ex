@@ -1,12 +1,13 @@
 defmodule HelloWeb.BoardController do
   use HelloWeb, :controller
+  import Phoenix.LiveView.Controller
 
   alias Hello.Forum
   alias Hello.Forum.Board
 
   def index(conn, _params) do
     boards = Forum.list_boards()
-    render(conn, "index.html", boards: boards)
+    live_render(conn, HelloWeb.PageLive, boards: boards)
   end
 
   def new(conn, _params) do
