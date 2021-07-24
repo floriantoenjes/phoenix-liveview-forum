@@ -8,7 +8,7 @@ defmodule Hello.Forum.Post do
   schema "posts" do
     field :content, :string
     belongs_to :thread, Thread
-    belongs_to :author, Member
+    belongs_to :author, Member, foreign_key: :author_id
 
     timestamps()
   end

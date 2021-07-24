@@ -10,7 +10,7 @@ defmodule Hello.Forum.Thread do
     field :title, :string
     belongs_to :board, Board
     has_many :posts, Post
-    belongs_to :author, Member
+    belongs_to :author, Member, foreign_key: :author_id
 
     timestamps()
   end
