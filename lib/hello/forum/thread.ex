@@ -4,11 +4,13 @@ defmodule Hello.Forum.Thread do
 
   alias Hello.Forum.Board
   alias Hello.Forum.Post
+  alias Hello.Forum.Member
 
   schema "threads" do
     field :title, :string
     belongs_to :board, Board
     has_many :posts, Post
+    belongs_to :author, Member
 
     timestamps()
   end

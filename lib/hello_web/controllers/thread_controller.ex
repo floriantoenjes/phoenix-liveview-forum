@@ -4,6 +4,9 @@ defmodule HelloWeb.ThreadController do
   alias Hello.Forum
   alias Hello.Forum.Thread
 
+  plug :require_existing_author
+  plug :authorize_thread when action in [:edit, :update, :delete]
+
   def index(conn, %{"board_id" => board_id}) do
     threads = Forum.list_threads()
     render(conn, "index.html", board_id: board_id, threads: threads)
@@ -16,7 +19,7 @@ defmodule HelloWeb.ThreadController do
 
   def create(conn, %{"board_id" => board_id, "thread" => thread_params}) do
     board = Forum.get_board!(board_id)
-    case Forum.create_thread(board, thread_params) do
+    case Forum.create_thread(conn.assigns.current_author, board, thread_params) do
       {:ok, thread} ->
         conn
         |> put_flash(:info, "Thread created successfully.")
@@ -60,4 +63,23 @@ defmodule HelloWeb.ThreadController do
     |> put_flash(:info, "Thread deleted successfully.")
     |> redirect(to: Routes.board_thread_path(conn, :index, board_id))
   end
+
+  defp require_existing_author(conn, _) do
+    author = Forum.ensure_author_exists(conn.assigns.current_user)
+    assign(conn, :current_author, author)
+  end
+
+  defp authorize_thread(conn, _) do
+    thread = Forum.get_thread!(conn.params["id"])
+
+    if conn.assigns.current_author.id == thread.author_id do
+      assign(conn, :thread, thread)
+    else
+      conn
+      |> put_flash(:error, "You can't modify that thread")
+      |> redirect(to: Routes.board_thread_path(conn, :index, thread.board.id))
+      |> halt()
+    end
+  end
+
 end

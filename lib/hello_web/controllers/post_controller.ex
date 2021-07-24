@@ -4,6 +4,9 @@ defmodule HelloWeb.PostController do
   alias Hello.Forum
   alias Hello.Forum.Post
 
+  plug :require_existing_author
+  plug :authorize_post when action in [:edit, :update, :delete]
+
   def index(conn, %{"board_id" => board_id, "thread_id" => thread_id}) do
     posts = Forum.list_posts()
     render(conn, "index.html", board_id: board_id, thread_id: thread_id, posts: posts)
@@ -59,5 +62,23 @@ defmodule HelloWeb.PostController do
     conn
     |> put_flash(:info, "Post deleted successfully.")
     |> redirect(to: Routes.board_thread_post_path(conn, :index, board_id, thread_id))
+  end
+
+  defp require_existing_author(conn, _) do
+    author = Forum.ensure_author_exists(conn.assigns.current_user)
+    assign(conn, :current_author, author)
+  end
+
+  defp authorize_post(conn, _) do
+    post = Forum.get_post!(conn.params["id"])
+
+    if conn.assigns.current_author.id == post.author_id do
+      assign(conn, :post, post)
+    else
+      conn
+      |> put_flash(:error, "You can't modify that post")
+      |> redirect(to: Routes.board_thread_post_path(conn, :index, post.thread.board.id, post.thread.id))
+      |> halt()
+    end
   end
 end

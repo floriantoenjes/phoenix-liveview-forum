@@ -3,10 +3,12 @@ defmodule Hello.Forum.Post do
   import Ecto.Changeset
 
   alias Hello.Forum.Thread
+  alias Hello.Forum.Member
 
   schema "posts" do
     field :content, :string
     belongs_to :thread, Thread
+    belongs_to :author, Member
 
     timestamps()
   end

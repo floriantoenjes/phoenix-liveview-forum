@@ -6,7 +6,7 @@ defmodule Hello.Forum do
   import Ecto.Query, warn: false
   alias Hello.Repo
 
-  alias Hello.Forum.{Board, Thread, Post}
+  alias Hello.Forum.{Board, Thread, Post, Member}
 
   @doc """
   Returns the list of boards.
@@ -116,7 +116,9 @@ defmodule Hello.Forum do
 
   """
   def list_threads do
-    Repo.all(Thread)
+    Thread
+    |> Repo.all()
+    |> Repo.preload(author: [user: :credential])
   end
 
   @doc """
@@ -136,7 +138,7 @@ defmodule Hello.Forum do
   def get_thread!(id) do
     Thread
     |>Repo.get!(id)
-    |> Repo.preload(:posts)
+    |> Repo.preload(:posts, author: [user: :credential])
   end
 
   @doc """
@@ -151,9 +153,10 @@ defmodule Hello.Forum do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_thread(board, attrs \\ %{}) do
+  def create_thread(%Member{} = author, board, attrs \\ %{}) do
     %Thread{}
     |> Thread.changeset(attrs)
+    |> Ecto.Changeset.put_change(:author_id, author.id)
     |> Ecto.Changeset.put_assoc(:board, board)
     |> Repo.insert()
   end
@@ -299,5 +302,118 @@ defmodule Hello.Forum do
   """
   def change_post(%Post{} = post, attrs \\ %{}) do
     Post.changeset(post, attrs)
+  end
+
+  alias Hello.Forum.Member
+
+  @doc """
+  Returns the list of members.
+
+  ## Examples
+
+      iex> list_members()
+      [%Member{}, ...]
+
+  """
+  def list_members do
+    Repo.all(Member)
+  end
+
+  @doc """
+  Gets a single member.
+
+  Raises `Ecto.NoResultsError` if the Member does not exist.
+
+  ## Examples
+
+      iex> get_member!(123)
+      %Member{}
+
+      iex> get_member!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_member!(id) do
+    Member
+    |> Repo.get!(id)
+    |> Repo.preload(user: :credential)
+  end
+
+  @doc """
+  Creates a member.
+
+  ## Examples
+
+      iex> create_member(%{field: value})
+      {:ok, %Member{}}
+
+      iex> create_member(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_member(attrs \\ %{}) do
+    %Member{}
+    |> Member.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a member.
+
+  ## Examples
+
+      iex> update_member(member, %{field: new_value})
+      {:ok, %Member{}}
+
+      iex> update_member(member, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_member(%Member{} = member, attrs) do
+    member
+    |> Member.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a member.
+
+  ## Examples
+
+      iex> delete_member(member)
+      {:ok, %Member{}}
+
+      iex> delete_member(member)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_member(%Member{} = member) do
+    Repo.delete(member)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking member changes.
+
+  ## Examples
+
+      iex> change_member(member)
+      %Ecto.Changeset{data: %Member{}}
+
+  """
+  def change_member(%Member{} = member, attrs \\ %{}) do
+    Member.changeset(member, attrs)
+  end
+
+
+  def ensure_author_exists(%Hello.Accounts.User{} = user) do
+    %Member{user_id: user.id}
+    |> Ecto.Changeset.change()
+    |> Ecto.Changeset.unique_constraint(:user_id)
+    |> Repo.insert()
+    |> handle_existing_member()
+  end
+  defp handle_existing_member({:ok, member}), do: member
+  defp handle_existing_member({:error, changeset}) do
+    Repo.get_by!(Member, user_id: changeset.data.user_id)
   end
 end
