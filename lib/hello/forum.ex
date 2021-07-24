@@ -115,8 +115,9 @@ defmodule Hello.Forum do
       [%Thread{}, ...]
 
   """
-  def list_threads do
+  def list_threads(board_id) do
     Thread
+    |> where(board_id: ^board_id)
     |> Repo.all()
     |> Repo.preload(author: [user: :credential])
   end
@@ -218,10 +219,17 @@ defmodule Hello.Forum do
       [%Post{}, ...]
 
   """
-  def list_posts do
-    Post
-    |> Repo.all()
-    |> Repo.preload(author: [user: :credential])
+  def list_posts(board_id, thread_id) do
+    thread = case Thread |> where(board_id: ^board_id) |> Repo.get(thread_id) do
+      nil -> nil
+      th -> th
+    end
+
+    cond do
+      thread == nil -> []
+      thread != nil -> Post |> where(thread_id: ^thread.id) |> Repo.all() |> Repo.preload(author: [user: :credential])
+    end
+
   end
 
   @doc """

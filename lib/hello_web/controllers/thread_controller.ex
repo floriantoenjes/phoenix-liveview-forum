@@ -8,7 +8,7 @@ defmodule HelloWeb.ThreadController do
   plug :authorize_thread when action in [:edit, :update, :delete]
 
   def index(conn, %{"board_id" => board_id}) do
-    threads = Forum.list_threads()
+    threads = Forum.list_threads(board_id)
     render(conn, "index.html", board_id: board_id, threads: threads)
   end
 

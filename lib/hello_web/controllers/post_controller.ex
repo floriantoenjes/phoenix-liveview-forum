@@ -8,7 +8,7 @@ defmodule HelloWeb.PostController do
   plug :authorize_post when action in [:edit, :update, :delete]
 
   def index(conn, %{"board_id" => board_id, "thread_id" => thread_id}) do
-    posts = Forum.list_posts()
+    posts = Forum.list_posts(board_id, thread_id)
     render(conn, "index.html", board_id: board_id, thread_id: thread_id, posts: posts)
   end
 
