@@ -7,7 +7,8 @@ defmodule HelloWeb.BoardController do
 
   def index(conn, _params) do
     boards = Forum.list_boards()
-    live_render(conn, HelloWeb.BoardsLive, session: %{"boards" => boards})
+    changeset = Forum.change_board(%Board{})
+    live_render(conn, HelloWeb.BoardsLive, session: %{"boards" => boards, "changeset" => changeset})
   end
 
   def new(conn, _params) do
