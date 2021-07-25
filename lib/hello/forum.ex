@@ -141,7 +141,7 @@ defmodule Hello.Forum do
   def get_thread!(id) do
     Thread
     |> Repo.get!(id)
-    |> Repo.preload(:posts, author: [user: :credential])
+    |> Repo.preload(posts: [author: [user: :credential]], author: [user: :credential])
   end
 
   @doc """

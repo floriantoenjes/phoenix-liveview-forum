@@ -1,17 +1,9 @@
-<h1>Show Thread</h1>
+<h1><%= @thread.title %></h1>
 
-<ul>
-
-    <li>
-        <strong>Title:</strong>
-        <%= @thread.title %>
-    </li>
-
-    <%= for post <- @thread.posts do %>
-    <li><%= link post.content, to: Routes.board_thread_post_path(@socket, :show, @board_id, @thread.id, post.id) %></li>
-    <% end %>
-
-</ul>
+<%= for post <- @thread.posts do %>
+<div><%= post.content %> by <%= post.author.user.name %> at <%= post.inserted_at %></div>
+<hr>
+<% end %>
 
 <%= f = form_for @changeset, "#", [phx_submit: :createPost] %>
 <%= label f, :content %>
