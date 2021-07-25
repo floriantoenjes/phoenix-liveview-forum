@@ -8,7 +8,7 @@
     </li>
 
     <%= for thread <- @board.threads do %>
-    <li><%= link thread.title, to: Routes.board_thread_path(@socket, :show, @board.id, thread.id) %></li>
+    <li><%= live_patch thread.title, to: Routes.live_path(@socket, HelloWeb.ThreadDetailLive, @board.id, thread.id) %></li>
     <% end %>
 
 </ul>

@@ -34,6 +34,9 @@ defmodule HelloWeb.Router do
     live "/", BoardsLive
     live "/:id", BoardDetailLive
 
+    live "/:id/threads/:thread_id", ThreadDetailLive
+
+
     resources "/", BoardController do
       resources "/threads", ThreadController do
         resources "/posts", PostController
