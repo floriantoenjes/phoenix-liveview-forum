@@ -1,0 +1,25 @@
+<h1>Show Board</h1>
+
+<ul>
+
+    <li>
+        <strong>Name:</strong>
+        <%= @board.name %>
+    </li>
+
+    <%= for thread <- @board.threads do %>
+    <li><%= link thread.title, to: Routes.board_thread_path(@socket, :show, @board.id, thread.id) %></li>
+    <% end %>
+
+</ul>
+
+<%= f = form_for @changeset, "#", [phx_submit: :createThread] %>
+<%= label f, :title %>
+<%= text_input f, :title %>
+<%= error_tag f, :title %>
+
+<%= submit "Create Thread" %>
+</form>
+
+<span><%= link "Edit", to: Routes.board_path(@socket, :edit, @board) %></span>
+<span><%= link "Back", to: Routes.board_path(@socket, :index) %></span>

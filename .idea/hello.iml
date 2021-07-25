@@ -99,5 +99,6 @@
     <orderEntry type="library" name="html_entities" level="project" />
     <orderEntry type="library" name="mime" level="project" />
     <orderEntry type="library" name="Elixir at /usr/lib/elixir" level="application" />
+    <orderEntry type="library" name="Elixir at /usr/lib/elixir" level="application" />
   </component>
 </module>

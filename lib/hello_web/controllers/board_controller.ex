@@ -4,6 +4,9 @@ defmodule HelloWeb.BoardController do
 
   alias Hello.Forum
   alias Hello.Forum.Board
+  alias Hello.Forum.Thread
+
+  plug :require_existing_author
 
   def index(conn, _params) do
     boards = Forum.list_boards()
@@ -30,7 +33,8 @@ defmodule HelloWeb.BoardController do
 
   def show(conn, %{"id" => id}) do
     board = Forum.get_board!(id)
-    render(conn, "show.html", board: board)
+    changeset = Forum.change_thread(%Thread{})
+    live_render(conn, HelloWeb.BoardDetailLive, session: %{"author" => conn.assigns.current_author,"board" => board, "changeset" => changeset})
   end
 
   def edit(conn, %{"id" => id}) do
@@ -60,5 +64,10 @@ defmodule HelloWeb.BoardController do
     conn
     |> put_flash(:info, "Board deleted successfully.")
     |> redirect(to: Routes.board_path(conn, :index))
+  end
+
+  defp require_existing_author(conn, _) do
+    author = Forum.ensure_author_exists(conn.assigns.current_user)
+    assign(conn, :current_author, author)
   end
 end
