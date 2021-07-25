@@ -2,7 +2,7 @@
 <module type="WEB_MODULE" version="4">
   <component name="FacetManager">
     <facet type="Elixir" name="Elixir">
-      <configuration sdkName="" />
+	    <configuration sdkName="Elixir at /usr/lib/elixir" />
     </facet>
   </component>
   <component name="NewModuleRootManager">
