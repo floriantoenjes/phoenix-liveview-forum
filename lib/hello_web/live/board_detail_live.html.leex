@@ -22,4 +22,4 @@
 </form>
 
 <span><%= link "Edit", to: Routes.board_path(@socket, :edit, @board) %></span>
-<span><%= link "Back", to: Routes.board_path(@socket, :index) %></span>
+<span><%= live_patch "Back", to: Routes.live_path(@socket, HelloWeb.BoardsLive) %></span>

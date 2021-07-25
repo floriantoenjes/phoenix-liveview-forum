@@ -1,8 +1,13 @@
 defmodule HelloWeb.BoardDetailLive do
   use HelloWeb, :live_view
 
-  def mount(_params, %{"author" => author, "board" => board, "changeset" => changeset}, socket) do
-#    HelloWeb.Endpoint.subscribe("boards")
+  alias Hello.Forum
+  alias Hello.Forum.Board
+  alias Hello.Forum.Thread
+
+  def mount(%{"id" => id}, %{"current_author" => author}, socket) do
+    board = Forum.get_board!(id)
+    changeset = Forum.change_thread(%Thread{})
 
     {:ok, socket |> assign(:author, author) |> assign(:board, board) |> assign(:changeset, changeset)}
   end

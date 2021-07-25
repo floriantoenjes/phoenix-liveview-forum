@@ -1,8 +1,14 @@
 defmodule HelloWeb.BoardsLive do
   use HelloWeb, :live_view
 
-  def mount(_params, %{"boards" => boards, "changeset" => changeset}, socket) do
+  alias Hello.Forum
+  alias Hello.Forum.Board
+
+  def mount(_params, session, socket) do
     HelloWeb.Endpoint.subscribe("boards")
+
+    boards = Forum.list_boards()
+    changeset = Forum.change_board(%Board{})
 
     {:ok, socket |> assign(:changeset, changeset) |> assign(:boards, boards)}
   end

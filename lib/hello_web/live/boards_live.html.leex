@@ -14,7 +14,7 @@
         <td><%= board.name %></td>
 
         <td>
-            <span><%= link "Show", to: Routes.board_path(@socket, :show, board) %></span>
+            <span><%= live_patch "Show", to: Routes.live_path(@socket, HelloWeb.BoardDetailLive, board.id) %></span>
             <span><%= link "Edit", to: Routes.board_path(@socket, :edit, board) %></span>
             <span><%= link "Delete", to: Routes.board_path(@socket, :delete, board), method: :delete, data: [confirm: "Are you sure?"] %></span>
         </td>

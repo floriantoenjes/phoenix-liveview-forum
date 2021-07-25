@@ -31,6 +31,9 @@ defmodule HelloWeb.Router do
   scope "/boards", HelloWeb do
     pipe_through [:browser, :authenticate_user]
 
+    live "/", BoardsLive
+    live "/:id", BoardDetailLive
+
     resources "/", BoardController do
       resources "/threads", ThreadController do
         resources "/posts", PostController
