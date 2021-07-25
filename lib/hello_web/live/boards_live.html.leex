@@ -1,27 +1,16 @@
-<h1>Listing Boards</h1>
+<h1 class="text-lg text-center mb-4">Welcome to the Phonix Forum</h1>
 
-<table>
-    <thead>
-    <tr>
-        <th>Name</th>
-
-        <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    <%= for board <- @boards do %>
-    <tr>
-        <td><%= board.name %></td>
-
-        <td>
-            <span><%= live_patch "Show", to: Routes.live_path(@socket, HelloWeb.BoardDetailLive, board.id) %></span>
-            <span><%= link "Edit", to: Routes.board_path(@socket, :edit, board) %></span>
-            <span><%= link "Delete", to: Routes.board_path(@socket, :delete, board), method: :delete, data: [confirm: "Are you sure?"] %></span>
-        </td>
-    </tr>
-    <% end %>
-    </tbody>
-</table>
+<h4 class="text- mb-5">Boards:</h4>
+<%= for board <- @boards do %>
+    <div class="flex mb-4 justify-between">
+        <span class="link mr-2"><%= live_patch String.to_atom(board.name), to: Routes.live_path(@socket, HelloWeb.BoardDetailLive, board.id) %></span>
+        <div>
+            <span class="link mr-2"><%= link "Edit", to: Routes.board_path(@socket, :edit, board) %></span>
+            <span class="link"><%= link "Delete", to: Routes.board_path(@socket, :delete, board), method: :delete, data: [confirm: "Are you sure?"] %></span>
+        </div>
+    </div>
+    <hr class="mb-4">
+<% end %>
 
 <%= f = form_for @changeset, "#", [phx_submit: :save] %>
 <%= if @changeset.action do %>
@@ -30,11 +19,11 @@
 </div>
 <% end %>
 
-<%= label f, :name %>
-<%= text_input f, :name %>
+<%= label f, "New board name:" %>
+<%= text_input f, :name, class: "input mb-5"%>
 <%= error_tag f, :name %>
 
 <div>
-    <%= submit "Save" %>
+    <%= submit "Create Board", class: "btn-primary" %>
 </div>
 

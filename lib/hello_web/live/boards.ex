@@ -4,7 +4,7 @@ defmodule HelloWeb.BoardsLive do
   alias Hello.Forum
   alias Hello.Forum.Board
 
-  def mount(_params, session, socket) do
+  def mount(_params, _session, socket) do
     HelloWeb.Endpoint.subscribe("boards")
 
     boards = Forum.list_boards()

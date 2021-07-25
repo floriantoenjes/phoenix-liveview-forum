@@ -1,5 +1,9 @@
 /* This file is for your main application css. */
-@import "./phoenix.css";
+@tailwind base;
+
+@tailwind components;
+
+@tailwind utilities;
 
 /* Alerts and form errors */
 .alert {
@@ -33,4 +37,16 @@
   color: #a94442;
   display: block;
   margin: -1rem 0 2rem;
+}
+
+.link {
+  @apply text-blue-500 hover:underline
+}
+
+.input {
+  @apply border-2
+}
+
+.btn-primary {
+  @apply border-2 bg-blue-500 text-white px-4 py-1 rounded-md font-bold hover:bg-blue-400
 }

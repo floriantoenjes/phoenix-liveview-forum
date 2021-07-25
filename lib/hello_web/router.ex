@@ -18,7 +18,7 @@ defmodule HelloWeb.Router do
     pipe_through :browser
 
 #    get "/", PageController, :index
-    live "/", PageLive, :index
+    live "/", BoardsLive
     resources "/users", UserController
     resources "/sessions", SessionController, only: [:new, :create, :delete], singleton: true
   end
