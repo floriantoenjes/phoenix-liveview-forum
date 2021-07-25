@@ -4,16 +4,18 @@ defmodule HelloWeb.BoardDetailLive do
   alias Hello.Forum
   alias Hello.Forum.Board
   alias Hello.Forum.Thread
+  alias Hello.Forum.Post
+  alias Hello.Forum.CreateThread
 
   def mount(%{"id" => id}, %{"current_author" => author}, socket) do
     board = Forum.get_board!(id)
-    changeset = Forum.change_thread(%Thread{})
+    changeset = Forum.change_create_thread(%CreateThread{})
 
     {:ok, socket |> assign(:author, author) |> assign(:board, board) |> assign(:changeset, changeset)}
   end
 
-  def handle_event("createThread", %{"thread" => thread_params}, socket) do
-    new_thread = Hello.Forum.create_thread(socket.assigns.author, socket.assigns.board, thread_params)
+  def handle_event("createThread", %{"create_thread" => thread_with_post_params}, socket) do
+    Hello.Forum.create_thread_with_post(socket.assigns.author, socket.assigns.board, thread_with_post_params)
 
     HelloWeb.Endpoint.broadcast("boards", "board:new_thread", "")
 
