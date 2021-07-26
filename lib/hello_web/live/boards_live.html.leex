@@ -1,4 +1,4 @@
-<h1 class="text-lg text-center mb-4">Welcome to the Phonix Forum</h1>
+<h1 class="text-lg text-center mb-5">Welcome to the Phoenix Forum!</h1>
 
 <h4 class="text- mb-5">Boards:</h4>
 <%= for board <- @boards do %>
@@ -20,7 +20,7 @@
 <% end %>
 
 <%= label f, "New board name:" %>
-<%= text_input f, :name, class: "input mb-5"%>
+<%= text_input f, :name, class: "input mb-5 w-full"%>
 <%= error_tag f, :name %>
 
 <div>

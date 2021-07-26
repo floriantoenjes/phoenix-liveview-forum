@@ -40,7 +40,7 @@ defmodule Hello.Forum do
   def get_board!(id) do
     Board
     |> Repo.get!(id)
-    |> Repo.preload(:threads)
+    |> Repo.preload(threads:  [author: [user: :credential]])
   end
 
   @doc """

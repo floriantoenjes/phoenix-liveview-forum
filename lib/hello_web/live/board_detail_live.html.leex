@@ -1,30 +1,33 @@
-<h1>Show Board</h1>
+<h1 class="text-md text-center mb-4"><%= @board.name %></h1>
+<%= for thread <- @board.threads do %>
+<div>
+    <div class="flex mb-4 justify-between">
+        <span class="link"><%= live_patch thread.title, to: Routes.live_path(@socket, HelloWeb.ThreadDetailLive, @board.id, thread.id) %></span>
+        <span class="text-sm">by <%= thread.author.user.name%></span>
+    </div>
+</div>
+<hr class="mb-4">
+<% end %>
 
-<ul>
+<div>
+    <%= f = form_for @changeset, "#", [phx_submit: :createThread] %>
+    <div class="mt-2">
+        <%= label f, "Title:" %>
+    </div>
+    <%= text_input f, :title, class: "input w-full mb-2"%>
+    <%= error_tag f, :title %>
 
-    <li>
-        <strong>Name:</strong>
-        <%= @board.name %>
-    </li>
-
-    <%= for thread <- @board.threads do %>
-    <li><%= live_patch thread.title, to: Routes.live_path(@socket, HelloWeb.ThreadDetailLive, @board.id, thread.id) %></li>
-    <% end %>
-
-</ul>
-
-<%= f = form_for @changeset, "#", [phx_submit: :createThread] %>
-<%= label f, :title %>
-<%= text_input f, :title %>
-<%= error_tag f, :title %>
-
-<%= label f, :content %>
-<%= textarea f, :content %>
-<%= error_tag f, :content %>
+    <div>
+        <%= label f, "First Post:" %>
+    </div>
+    <%= textarea f, :content, class: "input w-full mb-4" %>
+    <%= error_tag f, :content %>
 
 
-<%= submit "Create Thread" %>
-</form>
+    <%= submit "Create Thread", class: "btn-primary mb-4" %>
+    </form>
 
-<span><%= link "Edit", to: Routes.board_path(@socket, :edit, @board) %></span>
-<span><%= live_patch "Back", to: Routes.live_path(@socket, HelloWeb.BoardsLive) %></span>
+</div>
+
+<span class="link"><%= link "Edit", to: Routes.board_path(@socket, :edit, @board) %></span>
+<span class="link"><%= live_patch "Back", to: Routes.live_path(@socket, HelloWeb.BoardsLive) %></span>

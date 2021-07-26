@@ -1,17 +1,25 @@
-<h1><%= @thread.title %></h1>
+<h1 class="text-md text-center mb-4">
+    <%= @thread.title %>
+</h1>
 
 <%= for post <- @thread.posts do %>
-<div><%= post.content %> by <%= post.author.user.name %> at <%= post.inserted_at %></div>
-<hr>
+<div class="mb-5">
+    <div class="text-sm"><%= post.author.user.name %> at <%= post.inserted_at %></div>
+    <div class="card">
+        <div><%= post.content %></div>
+    </div>
+</div>
 <% end %>
 
 <%= f = form_for @changeset, "#", [phx_submit: :createPost] %>
-<%= label f, :content %>
-<%= textarea f, :content %>
+<div>
+    <%= label f, "Post:" %>
+</div>
+<%= textarea f, :content, class: "input mb-4 w-full" %>
 <%= error_tag f, :content %>
 
-<%= submit "Create Post" %>
+<%= submit "Create Post", class: "btn-primary mb-4"%>
 </form>
 
-<span><%= link "Edit", to: Routes.board_thread_path(@socket, :edit, @board_id, @thread) %></span>
-<span><%= live_patch "Back", to: Routes.live_path(@socket, HelloWeb.BoardDetailLive, @board_id) %></span>
+<span class="link"><%= link "Edit", to: Routes.board_thread_path(@socket, :edit, @board_id, @thread) %></span>
+<span class="link"><%= live_patch "Back", to: Routes.live_path(@socket, HelloWeb.BoardDetailLive, @board_id) %></span>
