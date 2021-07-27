@@ -142,6 +142,7 @@ defmodule Hello.Forum do
     Thread
     |> Repo.get!(id)
     |> Repo.preload(posts: [author: [user: :credential]], author: [user: :credential])
+    |> Repo.preload(:board)
   end
 
   @doc """

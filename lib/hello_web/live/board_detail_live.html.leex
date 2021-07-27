@@ -1,4 +1,8 @@
-<h1 class="text-md text-center mb-4"><%= @board.name %></h1>
+<h1 class="text-md mb-5">
+    <span class="link"><%= live_patch "Overview", to: Routes.live_path(@socket, HelloWeb.BoardsLive) %></span>
+    / <%= @board.name %>
+</h1>
+
 <%= for thread <- @board.threads do %>
 <div>
     <div class="flex mb-4 justify-between">
@@ -30,4 +34,3 @@
 </div>
 
 <span class="link"><%= link "Edit", to: Routes.board_path(@socket, :edit, @board) %></span>
-<span class="link"><%= live_patch "Back", to: Routes.live_path(@socket, HelloWeb.BoardsLive) %></span>
