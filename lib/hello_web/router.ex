@@ -1,6 +1,8 @@
 defmodule HelloWeb.Router do
   use HelloWeb, :router
 
+  alias Hello.Forum
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -29,7 +31,7 @@ defmodule HelloWeb.Router do
   # end
 
   scope "/boards", HelloWeb do
-    pipe_through [:browser, :authenticate_user]
+    pipe_through [:browser, :authenticate_user, :require_existing_author]
 
     live "/", BoardsLive
     live "/:id", BoardDetailLive
@@ -70,5 +72,11 @@ defmodule HelloWeb.Router do
       user_id ->
         assign(conn, :current_user, Hello.Accounts.get_user!(user_id))
     end
+  end
+
+  defp require_existing_author(conn, _) do
+    author = Forum.ensure_author_exists(conn.assigns.current_user)
+    assign(conn, :current_author, author)
+    conn = put_session(conn, :current_author, author)
   end
 end
