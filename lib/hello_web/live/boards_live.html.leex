@@ -1,16 +1,29 @@
 <h1 class="text-md text-center mb-2">Welcome to the Phoenix Forum!</h1>
 <hr class="mb-5">
 
+<div x-data="{ menuOpen: false}">
+    <div x-on:click="menuOpen = !menuOpen" class="cursor-pointer">
+        <svg class="h-10" xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24"
+             stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+    </div>
+    <div x-cloak x-show="menuOpen" x-transition class="absolute bg-white h-full right-0 shadow top-0 w-5/6">
+        <h4 class="text-center">Menu</h4>
+        <hr>
+    </div>
+</div>
+
 <h4 class="text- mb-5">Boards:</h4>
 <%= for board <- @boards do %>
-    <div class="flex mb-4 justify-between">
-        <span class="link mr-2"><%= live_patch String.to_atom(board.name), to: Routes.live_path(@socket, HelloWeb.BoardDetailLive, board.id) %></span>
-        <div>
-            <span class="link mr-2"><%= link "Edit", to: Routes.board_path(@socket, :edit, board) %></span>
-            <span class="link"><%= link "Delete", to: Routes.board_path(@socket, :delete, board), method: :delete, data: [confirm: "Are you sure?"] %></span>
-        </div>
+<div class="flex mb-4 justify-between">
+    <span class="link mr-2"><%= live_patch String.to_atom(board.name), to: Routes.live_path(@socket, HelloWeb.BoardDetailLive, board.id) %></span>
+    <div>
+        <span class="link mr-2"><%= link "Edit", to: Routes.board_path(@socket, :edit, board) %></span>
+        <span class="link"><%= link "Delete", to: Routes.board_path(@socket, :delete, board), method: :delete, data: [confirm: "Are you sure?"] %></span>
     </div>
-    <hr class="mb-4">
+</div>
+<hr class="mb-4">
 <% end %>
 
 <%= f = form_for @changeset, "#", [phx_submit: :save] %>

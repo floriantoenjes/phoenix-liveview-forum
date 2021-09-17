@@ -39,6 +39,10 @@
   margin: -1rem 0 2rem;
 }
 
+[x-cloak] {
+  display: none !important;
+}
+
 .link {
   @apply text-blue-500 hover:underline
 }
