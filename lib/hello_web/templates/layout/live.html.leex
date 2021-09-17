@@ -1,4 +1,5 @@
-<main role="main" class="container">
+<main role="main" class="container" xmlns:x-on="http://www.w3.org/1999/xhtml"
+      xmlns:x-transition="http://www.w3.org/1999/xhtml">
     <p class="alert alert-info" role="alert"
        phx-click="lv:clear-flash"
        phx-value-key="info"><%= live_flash(@flash, :info) %></p>
@@ -20,7 +21,15 @@
             </div>
             <div x-show="menuOpen" x-on:click="menuOpen = false"
                  class="menu-overlay h-full w-full absolute left-0 top-0 bg-black bg-opacity-25"></div>
-            <div x-cloak x-show="menuOpen" x-transition class="absolute bg-white h-full right-0 shadow top-0 w-5/6">
+            <div class="absolute bg-white h-full right-0 shadow top-0 w-5/6"
+                 x-cloak
+                 x-show="menuOpen"
+                 x-transition:enter="transition duration-500"
+                 x-transition:enter-start="transform translate-x-full"
+                 x-transition:enter-end="transform translate-x-0"
+                 x-transition:leave="transition duration-500"
+                 x-transition:leave-start="transform"
+                 x-transition:leave-end="transform translate-x-full">
             </div>
         </div>
     </div>
