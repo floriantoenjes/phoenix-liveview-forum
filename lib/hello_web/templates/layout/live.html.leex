@@ -1,8 +1,8 @@
 <main role="main" class="container" xmlns:x-on="http://www.w3.org/1999/xhtml"
       xmlns:x-transition="http://www.w3.org/1999/xhtml">
 
-    <div class="flex">
-        <h1 class="text-md text-center mb-2">Welcome to the Phoenix Forum!</h1>
+    <div class="flex mx-4 mt-4">
+        <h1 class="text-md text-center mb-2 mt-1.5">Welcome to the Phoenix Forum!</h1>
         <div id="sideMenu" x-data="{ menuOpen: false}" class="ml-auto">
             <div x-on:click="menuOpen = !menuOpen" class="cursor-pointer relative z-20">
                 <div id="nav-icon3" :class="{ 'open': menuOpen }" class="h-9 mt-1.5">
@@ -24,7 +24,8 @@
                  x-transition:leave-start="transform"
                  x-transition:leave-end="transform translate-x-full">
 
-                <div class="mt-14 text-center">
+                <div class="mt-10 text-center">
+                    <%= live_patch "Home", to: Routes.live_path(@socket, HelloWeb.BoardsLive), class: "block link mr-1 pb-3" %>
                     <hr>
                     <%= link "Sign in", to: Routes.session_path(@socket, :new), class: "block link py-3" %>
                     <hr>
@@ -36,6 +37,8 @@
             </div>
         </div>
     </div>
+
+    <hr class="mb-4">
 
     <p class="alert alert-info" role="alert"
        phx-click="lv:clear-flash"

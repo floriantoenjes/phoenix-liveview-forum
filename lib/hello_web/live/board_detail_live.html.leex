@@ -1,10 +1,11 @@
-<h1 class="text-md mb-5">
+<h1 class="text-md mb-5 mx-4">
     <span class="link"><%= live_patch "Overview", to: Routes.live_path(@socket, HelloWeb.BoardsLive) %></span>
     / <%= @board.name %>
 </h1>
+<hr class="mb-4">
 
 <%= for thread <- @board.threads do %>
-<div>
+<div class="mx-4">
     <div class="flex mb-4 justify-between">
         <span class="link"><%= live_patch thread.title, to: Routes.live_path(@socket, HelloWeb.ThreadDetailLive, @board.id, thread.id) %></span>
         <span class="text-sm">by <%= thread.author.user.name%></span>
@@ -13,7 +14,7 @@
 <hr class="mb-4">
 <% end %>
 
-<div>
+<div class="mx-4">
     <%= f = form_for @changeset, "#", [phx_submit: :createThread] %>
     <div class="mt-2">
         <%= label f, "Title:" %>

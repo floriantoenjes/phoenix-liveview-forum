@@ -1,10 +1,12 @@
-<h1 class="text-md  mb-4">
-    <span class="link"><%= live_patch @thread.board.name, to: Routes.live_path(@socket, HelloWeb.BoardDetailLive, @board_id) %></span>
+<h1 class="text-md  mb-4 mx-4 flex">
+    <%= live_patch @thread.board.name, to: Routes.live_path(@socket, HelloWeb.BoardDetailLive, @board_id), class: "link mr-1" %>
     / <%= @thread.title %>
+    <%= link "Edit", to: Routes.board_thread_path(@socket, :edit, @board_id, @thread), class: "link ml-auto" %>
 </h1>
+<hr class="mb-4">
 
 <%= for post <- @thread.posts do %>
-<div class="mb-5">
+<div class="mb-5 mx-4">
     <div class="text-sm"><%= post.author.user.name %> at <%= post.inserted_at %></div>
     <div class="card">
         <div><%= post.content %></div>
@@ -12,14 +14,14 @@
 </div>
 <% end %>
 
-<%= f = form_for @changeset, "#", [phx_submit: :createPost] %>
-<div>
-    <%= label f, "Post:" %>
+<div class="mx-4">
+    <%= f = form_for @changeset, "#", [phx_submit: :createPost] %>
+    <div>
+        <%= label f, "Post:" %>
+    </div>
+    <%= textarea f, :content, class: "input mb-4 w-full" %>
+    <%= error_tag f, :content %>
+
+    <%= submit "Create Post", class: "btn-primary mb-4"%>
+    </form>
 </div>
-<%= textarea f, :content, class: "input mb-4 w-full" %>
-<%= error_tag f, :content %>
-
-<%= submit "Create Post", class: "btn-primary mb-4"%>
-</form>
-
-<span class="link"><%= link "Edit", to: Routes.board_thread_path(@socket, :edit, @board_id, @thread) %></span>

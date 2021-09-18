@@ -1,6 +1,7 @@
-<h4 class="text- mb-5">Boards:</h4>
+<h4 class="mb-4 mx-4">Board Overview</h4>
+<hr class="mb-4">
 <%= for board <- @boards do %>
-<div class="flex mb-4 justify-between">
+<div class="flex mb-4 justify-between mx-4">
     <span class="link mr-2"><%= live_patch String.to_atom(board.name), to: Routes.live_path(@socket, HelloWeb.BoardDetailLive, board.id) %></span>
     <div>
         <span class="link mr-2"><%= link "Edit", to: Routes.board_path(@socket, :edit, board) %></span>
@@ -10,6 +11,7 @@
 <hr class="mb-4">
 <% end %>
 
+<div class="mx-4">
 <%= f = form_for @changeset, "#", [phx_submit: :save] %>
 <%= if @changeset.action do %>
 <div class="alert alert-danger">
@@ -24,4 +26,4 @@
 <div>
     <%= submit "Create Board", class: "btn-primary" %>
 </div>
-
+</div>
