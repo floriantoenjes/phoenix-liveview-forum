@@ -55,12 +55,16 @@
   @apply border-2 bg-blue-500 text-white px-4 py-1 rounded-md font-bold hover:bg-blue-600
 }
 
+.btn-danger {
+  @apply border-2 bg-red-500 text-white px-4 py-1 rounded-md font-bold hover:bg-red-600
+}
+
 .card {
   @apply border rounded my-2 p-2 border-blue-200
 }
 
 #nav-icon3 {
-  width: 32px;
+  width: 26px;
   position: relative;
   -webkit-transform: rotate(0deg);
   -moz-transform: rotate(0deg);
@@ -76,7 +80,7 @@
 #nav-icon3 span {
   display: block;
   position: absolute;
-  height: 4px;
+  height: 2px;
   width: 100%;
   border-radius: 9px;
   opacity: 1;

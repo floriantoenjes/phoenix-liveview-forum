@@ -1,18 +1,11 @@
 <main role="main" class="container" xmlns:x-on="http://www.w3.org/1999/xhtml"
       xmlns:x-transition="http://www.w3.org/1999/xhtml">
-    <p class="alert alert-info" role="alert"
-       phx-click="lv:clear-flash"
-       phx-value-key="info"><%= live_flash(@flash, :info) %></p>
-
-    <p class="alert alert-danger" role="alert"
-       phx-click="lv:clear-flash"
-       phx-value-key="error"><%= live_flash(@flash, :error) %></p>
 
     <div class="flex">
         <h1 class="text-md text-center mb-2">Welcome to the Phoenix Forum!</h1>
         <div id="sideMenu" x-data="{ menuOpen: false}" class="ml-auto">
             <div x-on:click="menuOpen = !menuOpen" class="cursor-pointer relative z-20">
-                <div id="nav-icon3" :class="{ 'open': menuOpen }" class="h-9">
+                <div id="nav-icon3" :class="{ 'open': menuOpen }" class="h-9 mt-1.5">
                     <span></span>
                     <span></span>
                     <span></span>
@@ -30,9 +23,27 @@
                  x-transition:leave="transition duration-500"
                  x-transition:leave-start="transform"
                  x-transition:leave-end="transform translate-x-full">
+
+                <div class="mt-14 text-center">
+                    <hr>
+                    <%= link "Sign in", to: Routes.session_path(@socket, :new), class: "block link py-3" %>
+                    <hr>
+                    <%= form_for @changeset, Routes.session_path(@socket, :delete), [method: :delete, as: :user], fn _ -> %>
+                        <%= submit "Sign out", class: "link py-3" %>
+                    <% end %>
+                    <hr>
+                </div>
             </div>
         </div>
     </div>
+
+    <p class="alert alert-info" role="alert"
+       phx-click="lv:clear-flash"
+       phx-value-key="info"><%= live_flash(@flash, :info) %></p>
+
+    <p class="alert alert-danger" role="alert"
+       phx-click="lv:clear-flash"
+       phx-value-key="error"><%= live_flash(@flash, :error) %></p>
 
     <%= @inner_content %>
 </main>
