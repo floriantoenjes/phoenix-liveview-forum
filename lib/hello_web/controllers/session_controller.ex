@@ -2,6 +2,8 @@ defmodule HelloWeb.SessionController do
   use HelloWeb, :controller
 
   alias Hello.Accounts
+  alias Hello.Forum.Member
+  alias Hello.Repo
 
   def new(conn, _) do
     render(conn, "new.html")
@@ -10,7 +12,7 @@ defmodule HelloWeb.SessionController do
   def create(conn, %{"user" => %{"email" => email, "password" => password}}) do
     case Accounts.authenticate_by_email_password(email, password) do
       {:ok, user} ->
-        author = Hello.Accounts.get_user!(user.id)
+        author = Repo.get_by!(Member, user_id: user.id)
 
         conn
         |> put_flash(:info, "Welcome back!")
