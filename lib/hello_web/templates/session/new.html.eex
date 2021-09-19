@@ -1,13 +1,19 @@
-<h1>Sign in</h1>
+<div class="h-screen">
+    <div class="flex flex-col justify-center items-center h-full pb-16">
+        <h2 class="text-xl text-center">Sign in</h2>
 
-<%= form_for @conn, Routes.session_path(@conn, :create), [method: :post, as: :user], fn f -> %>
-<div class="input my-4">
-    <%= text_input f, :email, placeholder: "Email" %>
+        <div>
+            <%= form_for @conn, Routes.session_path(@conn, :create), [method: :post, as: :user], fn f -> %>
+
+            <%= text_input f, :email, placeholder: "Email", class: "block input my-4" %>
+
+            <%= password_input f, :password, placeholder: "Password", class: "block input my-4" %>
+
+            <div class="flex justify-around mt-16">
+                <%= button("Back", to: "/", method: :get, class: "btn-secondary") %>
+                <%= submit "Login", class: "btn-primary" %>
+            </div>
+            <% end %>
+        </div>
+    </div>
 </div>
-
-<div class="input mb-4">
-    <%= password_input f, :password, placeholder: "Password" %>
-</div>
-
-<%= submit "Login", class: "btn-primary" %>
-<% end %>

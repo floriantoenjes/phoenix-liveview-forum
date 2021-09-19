@@ -55,6 +55,10 @@
   @apply border-2 bg-blue-500 text-white px-4 py-1 rounded-md font-bold hover:bg-blue-600
 }
 
+.btn-secondary {
+  @apply border-2 bg-gray-500 text-white px-4 py-1 rounded-md font-bold hover:bg-gray-600
+}
+
 .btn-danger {
   @apply border-2 bg-red-500 text-white px-4 py-1 rounded-md font-bold hover:bg-red-600
 }

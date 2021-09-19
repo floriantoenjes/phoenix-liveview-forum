@@ -67,7 +67,7 @@ defmodule HelloWeb.Router do
       nil ->
         conn
         |> Phoenix.Controller.put_flash(:error, "Login required")
-        |> Phoenix.Controller.redirect(to: "/")
+        |> Phoenix.Controller.redirect(to: "/sessions/new")
         |> halt()
       user_id ->
         assign(conn, :current_user, Hello.Accounts.get_user!(user_id))
