@@ -1,4 +1,4 @@
-<div class="flex mx-4 mt-4">
+<div class="flex mx-4 mt-4" xmlns:x-on="http://www.w3.org/1999/xhtml" xmlns:x-transition="http://www.w3.org/1999/xhtml">
     <h1 class="text-md text-center mb-2 mt-1.5">Welcome to the Phoenix Forum!</h1>
     <div id="sideMenu" x-data="{ menuOpen: false}" class="ml-auto">
         <div x-on:click="menuOpen = !menuOpen" class="cursor-pointer relative z-20">
@@ -24,12 +24,13 @@
             <div class="mt-6 text-center">
                 <%= live_redirect "Home", to: Routes.live_path(@socket, HelloWeb.BoardsLive), class: "block link mr-1 pb-3" %>
                 <hr>
-                <%= if true do %>
-                <%= link "Sign in", to: Routes.session_path(@socket, :new), class: "block link py-3" %>
+                <%= if !@author do %>
+                    <%= link "Sign in", to: Routes.session_path(@socket, :new), class: "block link py-3" %>
                 <hr>
-                <% end %>
-                <%= form_for @changeset, Routes.session_path(@socket, :delete), [method: :delete, as: :user], fn _ -> %>
-                <%= submit "Sign out", class: "link py-3" %>
+                <% else %>
+                    <%= form_for :sign_in, Routes.session_path(@socket, :delete), [method: :delete, as: :user], fn _ -> %>
+                        <%= submit "Sign out", class: "link py-3" %>
+                    <% end %>
                 <% end %>
                 <hr>
             </div>
