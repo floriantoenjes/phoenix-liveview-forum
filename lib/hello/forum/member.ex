@@ -4,6 +4,7 @@ defmodule Hello.Forum.Member do
 
   alias Hello.Forum.Thread
   alias Hello.Forum.Post
+  alias Hello.Forum.Notification
 
   schema "members" do
     field :role, :string
@@ -13,6 +14,8 @@ defmodule Hello.Forum.Member do
 
     has_many :threads, Thread
     has_many :posts, Post
+
+    many_to_many :notifications, Notification, join_through: "members_notifications"
 
     timestamps()
   end

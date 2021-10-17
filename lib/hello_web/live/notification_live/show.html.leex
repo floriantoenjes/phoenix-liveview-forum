@@ -1,0 +1,37 @@
+<h1>Show Notification</h1>
+
+<%= if @live_action in [:edit] do %>
+  <%= live_modal @socket, HelloWeb.NotificationLive.FormComponent,
+    id: @notification.id,
+    title: @page_title,
+    action: @live_action,
+    notification: @notification,
+    return_to: Routes.notification_show_path(@socket, :show, @notification) %>
+<% end %>
+
+<ul>
+
+  <li>
+    <strong>Read:</strong>
+    <%= @notification.read %>
+  </li>
+
+  <li>
+    <strong>Type:</strong>
+    <%= @notification.type %>
+  </li>
+
+  <li>
+    <strong>Target:</strong>
+    <%= @notification.target_id %>
+  </li>
+
+  <li>
+    <strong>Resource name:</strong>
+    <%= @notification.resource_name %>
+  </li>
+
+</ul>
+
+<span><%= live_patch "Edit", to: Routes.notification_show_path(@socket, :edit, @notification), class: "button" %></span>
+<span><%= live_redirect "Back", to: Routes.notification_index_path(@socket, :index) %></span>
