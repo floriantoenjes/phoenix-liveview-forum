@@ -1,14 +1,26 @@
 <div class="flex mx-4 mt-4" xmlns:x-on="http://www.w3.org/1999/xhtml" xmlns:x-transition="http://www.w3.org/1999/xhtml">
-    <h1 class="text-md text-center mb-2 mt-1.5">Welcome to the Phoenix Forum!</h1>
+    <h1 class="text-md text-center mb-2 mt-1.5">The Phoenix Forum</h1>
     <div id="sideMenu" x-data="{ menuOpen: false}" class="ml-auto">
-        <div x-on:click="menuOpen = !menuOpen" class="cursor-pointer relative z-20">
-            <div id="nav-icon3" :class="{ 'open': menuOpen }" class="h-9 mt-1.5">
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
+        <div class="flex">
+
+            <div class="mr-4 mt-1 notification-bell relative">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" width="28px" height="28px" fill="none"
+                     viewBox="0 0 28 28" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                          d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+                </svg>
+                <div class="inline-block notification-badge absolute top-0 right-0 mb-2 bg-red-500 text-white w-5 rounded-2xl text-center text-sm">2</div>
+            </div>
+            <div x-on:click="menuOpen = !menuOpen" class="cursor-pointer relative z-20">
+                <div id="nav-icon3" :class="{ 'open': menuOpen }" class="h-9 mt-1.5">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
             </div>
         </div>
+
         <div x-show="menuOpen" x-on:click="menuOpen = false"
              class="menu-overlay h-full w-full absolute left-0 top-0 bg-black bg-opacity-25"></div>
         <div class="absolute bg-white h-full right-0 shadow top-0 w-5/6"
@@ -25,11 +37,11 @@
                 <%= live_redirect "Home", to: Routes.live_path(@socket, HelloWeb.BoardsLive), class: "block link mr-1 pb-3" %>
                 <hr>
                 <%= if !@author do %>
-                    <%= link "Sign in", to: Routes.session_path(@socket, :new), class: "block link py-3" %>
+                <%= link "Sign in", to: Routes.session_path(@socket, :new), class: "block link py-3" %>
                 <hr>
                 <% else %>
-                    <%= form_for :sign_in, Routes.session_path(@socket, :delete), [method: :delete, as: :user], fn _ -> %>
-                        <%= submit "Sign out", class: "link py-3" %>
+                <%= form_for :sign_in, Routes.session_path(@socket, :delete), [method: :delete, as: :user], fn _ -> %>
+                <%= submit "Sign out", class: "link py-3" %>
                     <% end %>
                 <% end %>
                 <hr>

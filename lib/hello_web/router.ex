@@ -21,6 +21,13 @@ defmodule HelloWeb.Router do
 
 #    get "/", PageController, :index
     live "/", BoardsLive
+
+    live "/notifications", NotificationLive.Index, :index
+    live "/notifications/new", NotificationLive.Index, :new
+    live "/notifications/edit/:id", NotificationLive.Index, :edit
+    live "/notifications/:id", NotificationLive.Show, :show
+    live "/notifications/:id", NotificationLive.Show, :edit
+
     resources "/users", UserController
     resources "/sessions", SessionController, only: [:new, :create, :delete], singleton: true
   end
