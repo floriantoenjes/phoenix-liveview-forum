@@ -1,15 +1,39 @@
 <div class="flex mx-4 mt-4" xmlns:x-on="http://www.w3.org/1999/xhtml" xmlns:x-transition="http://www.w3.org/1999/xhtml">
     <h1 class="text-md text-center mb-2 mt-1.5">The Phoenix Forum</h1>
-    <div id="sideMenu" x-data="{ menuOpen: false}" class="ml-auto">
+    <div id="sideMenu" x-data="{ menuOpen: false, navOpen: false}" class="ml-auto">
         <div class="flex">
 
-            <div class="mr-4 mt-1 notification-bell relative">
+            <div class="mr-4 mt-1 notification-bell relative text-blue-500" x-on:click="navOpen = !navOpen">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" width="28px" height="28px" fill="none"
                      viewBox="0 0 28 28" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                           d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
                 </svg>
                 <div class="inline-block notification-badge absolute top-0 right-0 mb-2 bg-red-500 text-white w-5 rounded-2xl text-center text-sm">2</div>
+            </div>
+
+            <!-- This example requires Tailwind CSS v2.0+ -->
+            <div x-show="navOpen" x-on:click="navOpen = false" x-cloak
+                 class="menu-overlay h-full w-full absolute left-0 top-0 bg-black bg-opacity-25"></div>
+            <div class="relative inline-block text-left" x-show="navOpen" x-cloak>
+                <!--
+                  Dropdown menu, show/hide based on menu state.
+
+                  Entering: "transition ease-out duration-100"
+                    From: "transform opacity-0 scale-95"
+                    To: "transform opacity-100 scale-100"
+                  Leaving: "transition ease-in duration-75"
+                    From: "transform opacity-100 scale-100"
+                    To: "transform opacity-0 scale-95"
+                -->
+                <div class="origin-top-right absolute right-0 mt-2 w-60 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+                    <%= for notification <- @notifications do %>
+                        <div class="py-1" role="none">
+                            <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
+                            <%= link notification.resource_name, to: Routes.notification_show_path(@socket, :show, notification.id), class: "text-gray-700 block px-4 py-2 text-sm" %>
+                        </div>
+                    <% end %>
+                </div>
             </div>
 
             <div x-on:click="menuOpen = !menuOpen" class="cursor-pointer relative z-20">
@@ -23,7 +47,7 @@
         </div>
 
         <div x-show="menuOpen" x-on:click="menuOpen = false"
-             class="menu-overlay h-full w-full absolute left-0 top-0 bg-black bg-opacity-25"></div>
+             class="menu-overlay h-full w-full absolute left-0 top-0 bg-black bg-opacity-25" x-cloak></div>
         <div class="absolute bg-white h-full right-0 shadow top-0 w-5/6"
              x-cloak
              x-show="menuOpen"
