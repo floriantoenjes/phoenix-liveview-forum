@@ -4,13 +4,21 @@ defmodule HelloWeb.BoardsLive do
   alias Hello.Forum
   alias Hello.Forum.Board
 
-  def mount(_params, _session, socket) do
+
+  def mount(_params, session, socket) do
+    IO.puts("HIT")
     HelloWeb.Endpoint.subscribe("boards")
+
+    author = if Map.has_key?(session, "current_author") do
+      Map.get(session, "current_author")
+    else
+      nil
+    end
 
     boards = Forum.list_boards()
     changeset = Forum.change_board(%Board{})
 
-    {:ok, socket |> assign(:changeset, changeset) |> assign(:boards, boards)}
+    {:ok, socket |> assign(:changeset, changeset) |> assign(:boards, boards) |> assign(:author, author)}
   end
 
   def handle_event("save", %{"board" => board_params}, socket) do
@@ -26,5 +34,6 @@ defmodule HelloWeb.BoardsLive do
     boards = Hello.Forum.list_boards()
     {:noreply, assign(socket, :boards, boards)}
   end
+
 
 end

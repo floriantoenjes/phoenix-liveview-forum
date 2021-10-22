@@ -61,13 +61,13 @@
             <div class="mt-6 text-center">
                 <%= live_redirect "Home", to: Routes.live_path(@socket, HelloWeb.BoardsLive), class: "block link mr-1 pb-3" %>
                 <hr>
-                <%= if !@author do %>
-                <%= link "Sign in", to: Routes.session_path(@socket, :new), class: "block link py-3" %>
-                <hr>
-                <% else %>
+                <%= if @author != nil do %>
                 <%= form_for :sign_in, Routes.session_path(@socket, :delete), [method: :delete, as: :user], fn _ -> %>
                 <%= submit "Sign out", class: "link py-3" %>
                     <% end %>
+                <% else %>
+                <%= link "Sign in", to: Routes.session_path(@socket, :new), class: "block link py-3" %>
+                <hr>
                 <% end %>
                 <hr>
             </div>

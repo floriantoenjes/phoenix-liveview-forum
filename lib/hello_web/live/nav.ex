@@ -3,7 +3,7 @@ defmodule HelloWeb.NavLive do
   use HelloWeb, :live_view
 
   def mount(socket) do
-    notifications = [Hello.Forum.get_notification!(1)]
+    notifications = Hello.Forum.list_notifications()
     {:ok, socket |> assign(:notifications, notifications)}
   end
 
