@@ -4,8 +4,8 @@ defmodule HelloWeb.NotificationLive.Show do
   alias Hello.Forum
 
   @impl true
-  def mount(_params, _session, socket) do
-    {:ok, socket}
+  def mount(_params, %{"current_author" => author}, socket) do
+    {:ok, socket |> assign(:author, author)}
   end
 
   @impl true

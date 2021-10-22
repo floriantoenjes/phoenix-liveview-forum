@@ -5,6 +5,7 @@ defmodule HelloWeb.ThreadDetailLive do
   alias Hello.Forum.Board
   alias Hello.Forum.Thread
   alias Hello.Forum.Post
+  alias Hello.Forum.Notification
 
   def mount(%{"id" => board_id, "thread_id" => thread_id}, %{"current_author" => author}, socket) do
     thread = Forum.get_thread!(thread_id)

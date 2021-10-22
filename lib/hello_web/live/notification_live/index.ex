@@ -5,8 +5,8 @@ defmodule HelloWeb.NotificationLive.Index do
   alias Hello.Forum.Notification
 
   @impl true
-  def mount(_params, _session, socket) do
-    {:ok, assign(socket, :notifications, list_notifications())}
+  def mount(_params, %{"current_author" => author}, socket) do
+    {:ok, socket |> assign(:notifications, list_notifications()) |> assign(:author, author)}
   end
 
   @impl true

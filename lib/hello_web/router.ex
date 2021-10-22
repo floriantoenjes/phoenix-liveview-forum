@@ -22,12 +22,6 @@ defmodule HelloWeb.Router do
 #    get "/", PageController, :index
     live "/", BoardsLive
 
-    live "/notifications", NotificationLive.Index, :index
-    live "/notifications/new", NotificationLive.Index, :new
-    live "/notifications/edit/:id", NotificationLive.Index, :edit
-    live "/notifications/:id", NotificationLive.Show, :show
-    live "/notifications/:id", NotificationLive.Show, :edit
-
     resources "/users", UserController
     resources "/sessions", SessionController, only: [:new, :create, :delete], singleton: true
   end
@@ -51,6 +45,17 @@ defmodule HelloWeb.Router do
         resources "/posts", PostController
       end
     end
+  end
+
+  scope "/notifications",  HelloWeb do
+
+    pipe_through [:browser, :authenticate_user, :require_existing_author]
+
+    live "/", NotificationLive.Index, :index
+    live "/new", NotificationLive.Index, :new
+    live "/edit/:id", NotificationLive.Index, :edit
+    live "/:id", NotificationLive.Show, :show
+    live "/:id", NotificationLive.Show, :edit
   end
 
   # Enables LiveDashboard only for development

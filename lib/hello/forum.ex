@@ -6,7 +6,7 @@ defmodule Hello.Forum do
   import Ecto.Query, warn: false
   alias Hello.Repo
 
-  alias Hello.Forum.{Board, CreateThread, Thread, Post, Member}
+  alias Hello.Forum.{Board, CreateThread, Thread, Post, Member, Notification}
 
   alias Ecto.Multi
 
@@ -284,11 +284,20 @@ defmodule Hello.Forum do
 
   """
   def create_post(%Member{} = author, thread, attrs \\ %{}) do
-    %Post{}
-    |> Post.changeset(attrs)
+    post = Post.changeset(%Post{}, attrs)
     |> Ecto.Changeset.put_change(:author_id, author.id)
     |> Ecto.Changeset.put_assoc(:thread, thread)
-    |> Repo.insert()
+
+    notification = Notification.changeset(%Notification{}, %{read: false, type: 1, target_id: thread.id, resource_name: thread.title})
+
+    result = Multi.new()
+    |> Multi.insert(:post, post)
+    |> Multi.insert(:notification, notification)
+    |> Repo.transaction()
+
+    IO.puts(result)
+
+
   end
 
   @doc """
