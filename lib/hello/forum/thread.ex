@@ -12,6 +12,8 @@ defmodule Hello.Forum.Thread do
     has_many :posts, Post
     belongs_to :author, Member, foreign_key: :author_id
 
+    many_to_many :subscribed_users, Member, join_through: "members_subscribed_threads"
+
     timestamps()
   end
 

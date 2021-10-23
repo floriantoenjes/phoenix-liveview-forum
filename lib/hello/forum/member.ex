@@ -16,6 +16,7 @@ defmodule Hello.Forum.Member do
     has_many :posts, Post
 
     many_to_many :notifications, Notification, join_through: "members_notifications"
+    many_to_many :subscribed_threads, Thread, join_through: "members_subscribed_threads"
 
     timestamps()
   end
