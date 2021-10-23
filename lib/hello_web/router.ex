@@ -45,6 +45,8 @@ defmodule HelloWeb.Router do
         resources "/posts", PostController
       end
     end
+
+    post "/:board_id/threads/:thread_id", ThreadController, :subscribe
   end
 
   scope "/notifications",  HelloWeb do

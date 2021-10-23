@@ -527,6 +527,13 @@ defmodule Hello.Forum do
     |> Repo.update()
   end
 
+  def subscribe_to_thread(thread, author) do
+    Repo.preload(thread, :subscribed_users)
+    |> Ecto.Changeset.change()
+    |> Ecto.Changeset.put_assoc(:subscribed_users, [author])
+    |> Repo.update!()
+  end
+
   @doc """
   Deletes a notification.
 

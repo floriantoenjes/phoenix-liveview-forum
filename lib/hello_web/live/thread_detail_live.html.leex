@@ -25,3 +25,7 @@
     <%= submit "Create Post", class: "btn-primary mb-4"%>
     </form>
 </div>
+
+<%= form_for :subscribe_to_thread, "", [method: :post, as: :user], fn _ -> %>
+        <%= submit "Subscribe", class: "link py-3" %>
+<% end %>

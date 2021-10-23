@@ -82,4 +82,13 @@ defmodule HelloWeb.ThreadController do
     end
   end
 
+  def subscribe(conn, %{"thread_id" => thread_id}) do
+    thread = Forum.get_thread!(thread_id)
+    author = conn.assigns.current_author
+
+    Forum.subscribe_to_thread(thread, author)
+
+    conn
+  end
+
 end
