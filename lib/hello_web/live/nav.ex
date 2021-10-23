@@ -8,4 +8,10 @@ defmodule HelloWeb.NavLive do
     {:ok, socket |> assign(:notifications, notifications)}
   end
 
+  def get_notification_link(socket, notification) do
+    thread = Hello.Forum.get_thread!(notification.target_id)
+
+    Routes.board_thread_path(socket, :show, thread.board.id, thread)
+  end
+
 end

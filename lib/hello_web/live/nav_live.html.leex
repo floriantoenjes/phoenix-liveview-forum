@@ -30,7 +30,7 @@
                     <%= for notification <- @notifications do %>
                         <div class="py-1" role="none">
                             <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
-                            <%= link notification.resource_name, to: Routes.notification_show_path(@socket, :show, notification.id), class: "text-gray-700 block px-4 py-2 text-sm" %>
+                            <%= link "New post in " <> notification.resource_name, to: get_notification_link(@socket, notification), class: "text-gray-700 block px-4 py-2 text-sm" %>
                         </div>
                     <% end %>
                 </div>
