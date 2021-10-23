@@ -288,15 +288,21 @@ defmodule Hello.Forum do
     |> Ecto.Changeset.put_change(:author_id, author.id)
     |> Ecto.Changeset.put_assoc(:thread, thread)
 
-    notification = Notification.changeset(%Notification{}, %{read: false, type: 1, target_id: thread.id, resource_name: thread.title})
-
     result = Multi.new()
     |> Multi.insert(:post, post)
-    |> Multi.insert(:notification, notification)
+
+    thread = Repo.preload(thread, :subscribed_users)
+
+    result2 = if Enum.any?(thread.subscribed_users, fn member -> member.id == author.id end) do
+
+      notification = Notification.changeset(%Notification{}, %{read: false, type: 1, target_id: thread.id, resource_name: thread.title})
+      |> Ecto.Changeset.put_assoc(:receiver, [author])
+
+      Multi.insert(result, :notification, notification)
+    end
+
+    result2
     |> Repo.transaction()
-
-    IO.puts(result)
-
 
   end
 
