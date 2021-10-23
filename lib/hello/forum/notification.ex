@@ -10,7 +10,7 @@ defmodule Hello.Forum.Notification do
     field :target_id, :integer
     field :type, :integer
 
-    many_to_many :receiver, Member, join_through: "members_notifications"
+    many_to_many :receiver, Member, join_through: Hello.Forum.Members_Notification
 
     timestamps()
   end

@@ -481,6 +481,15 @@ defmodule Hello.Forum do
     Repo.all(Notification)
   end
 
+  def list_notifications_by_member(member) do
+
+    #IO.puts(Map.from_struct(%Notification{}))
+    Hello.Forum.Members_Notification
+    |> where(member_id: ^member.id)
+    |> Repo.all()
+    |> Repo.preload(:notification)
+  end
+
   @doc """
   Gets a single notification.
 

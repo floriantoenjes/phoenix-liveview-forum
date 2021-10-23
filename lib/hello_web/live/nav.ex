@@ -4,8 +4,20 @@ defmodule HelloWeb.NavLive do
 
   def mount(socket) do
     HelloWeb.Endpoint.subscribe("threads")
-    notifications = Hello.Forum.list_notifications()
-    {:ok, socket |> assign(:notifications, notifications)}
+    {:ok, socket }
+  end
+
+  def update(assigns, socket) do
+    notifications = if assigns.author do
+      member_notifications = Hello.Forum.list_notifications_by_member(assigns.author)
+
+      #IO.puts(member_notifications)
+
+      Enum.map(member_notifications, fn mn -> mn.notification end)
+    else
+      []
+    end
+    {:ok, socket |> assign(:notifications, notifications) |> assign(:author, assigns.author)}
   end
 
   def get_notification_link(socket, notification) do

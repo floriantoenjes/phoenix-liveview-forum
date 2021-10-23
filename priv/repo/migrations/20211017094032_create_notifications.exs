@@ -11,7 +11,7 @@ defmodule Hello.Repo.Migrations.CreateNotifications do
       timestamps()
     end
 
-    create table(:members_notifications, primary_key: false) do
+    create table(:members_notifications) do
       add :member_id, references(:members)
       add :notification_id, references(:notifications)
     end
