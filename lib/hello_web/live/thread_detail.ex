@@ -20,7 +20,12 @@ defmodule HelloWeb.ThreadDetailLive do
     HelloWeb.Endpoint.broadcast("threads", "thread:new_post", "")
 
     {:noreply, assign(socket, :thread, Hello.Forum.get_thread!(socket.assigns.thread.id))}
+  end
 
+  def handle_event("subscribe", _params, socket) do
+    Forum.subscribe_to_thread(socket.assigns.thread, socket.assigns.author)
+
+    {:noreply, assign(socket, :thread, Hello.Forum.get_thread!(socket.assigns.thread.id))}
   end
 
   def handle_info(%{event: "thread:new_post"}, socket) do
