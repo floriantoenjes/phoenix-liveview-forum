@@ -33,7 +33,7 @@
                         <div class="py-1" role="none">
                             <a phx-click="mark_notification_read"
                                phx-target="#navigation"
-                               phx-value-notification-id="<% notification.id %>"
+                               phx-value-notification-id="<%= notification.id %>"
                                class="text-gray-700 block px-4 py-2 text-sm cursor-pointer">
                                 <%= "New post in " <> notification.resource_name %>
                             </a>
