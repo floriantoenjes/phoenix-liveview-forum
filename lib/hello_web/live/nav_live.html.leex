@@ -31,8 +31,12 @@
                 <div class="origin-top-right absolute right-0 mt-2 w-60 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
                     <%= for notification <- @notifications do %>
                         <div class="py-1" role="none">
-                            <%= link "New post in " <> notification.resource_name, to: get_notification_link(@socket, notification), class: "text-gray-700 block px-4 py-2 text-sm" %>
-                            <a phx-click="mark_notification_read" phx-target="#navigation" phx-value-notification-id="<%= notification.id %>">Mark read</a>
+                            <a phx-click="mark_notification_read"
+                               phx-target="#navigation"
+                               phx-value-notification-id="<% notification.id %>"
+                               class="text-gray-700 block px-4 py-2 text-sm cursor-pointer">
+                                <%= "New post in " <> notification.resource_name %>
+                            </a>
                         </div>
                     <% end %>
                 </div>

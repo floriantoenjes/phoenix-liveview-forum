@@ -31,22 +31,15 @@ defmodule HelloWeb.NavLive do
   def get_notification_link(socket, notification) do
     thread = Hello.Forum.get_thread!(notification.target_id)
 
-    #notification = %{notification | read: true}
-
-    #Hello.Forum.update_notification(notification, %{read: true})
-
     Routes.board_thread_path(socket, :show, thread.board.id, thread)
   end
 
   def handle_event("mark_notification_read", %{"notification-id" => notification_id}, socket) do
     notification = Hello.Forum.get_notification!(notification_id)
 
-    #IO.puts(notification.receiver)
-
-    #Hello.Forum.delete_members_notification(notification.receiver)
     Hello.Forum.delete_notification(notification)
 
-    {:noreply, socket}
+    {:noreply, redirect(socket, to: get_notification_link(socket, notification))}
   end
 
 end
