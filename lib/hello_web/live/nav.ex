@@ -11,8 +11,6 @@ defmodule HelloWeb.NavLive do
     notifications = if assigns.author do
       member_notifications = Hello.Forum.list_notifications_by_member(assigns.author)
 
-      #IO.puts(member_notifications)
-
       Enum.map(member_notifications, fn mn -> mn.notification end)
     else
       []
@@ -20,10 +18,35 @@ defmodule HelloWeb.NavLive do
     {:ok, socket |> assign(:notifications, notifications) |> assign(:author, assigns.author)}
   end
 
+  def handle_info(%{event: "thread:new_post"}, socket) do
+    member_notifications = Hello.Forum.list_notifications_by_member(socket.assigns.author)
+
+    notifications = Enum.map(member_notifications, fn mn -> mn.notification end)
+
+    IO.puts("HIT")
+
+    {:no_reply, socket |> assign(:notifications, notifications)}
+  end
+
   def get_notification_link(socket, notification) do
     thread = Hello.Forum.get_thread!(notification.target_id)
 
+    #notification = %{notification | read: true}
+
+    #Hello.Forum.update_notification(notification, %{read: true})
+
     Routes.board_thread_path(socket, :show, thread.board.id, thread)
+  end
+
+  def handle_event("mark_notification_read", %{"notification-id" => notification_id}, socket) do
+    notification = Hello.Forum.get_notification!(notification_id)
+
+    #IO.puts(notification.receiver)
+
+    #Hello.Forum.delete_members_notification(notification.receiver)
+    Hello.Forum.delete_notification(notification)
+
+    {:noreply, socket}
   end
 
 end

@@ -6,7 +6,7 @@ defmodule Hello.Forum do
   import Ecto.Query, warn: false
   alias Hello.Repo
 
-  alias Hello.Forum.{Board, CreateThread, Thread, Post, Member, Notification}
+  alias Hello.Forum.{Board, CreateThread, Thread, Post, Member, Notification, Members_Notification}
 
   alias Ecto.Multi
 
@@ -295,7 +295,7 @@ defmodule Hello.Forum do
 
     result2 = if Enum.any?(thread.subscribed_users, fn member -> member.id == author.id end) do
 
-      notification = Notification.changeset(%Notification{}, %{read: false, type: 1, target_id: thread.id, resource_name: thread.title})
+      notification = Notification.changeset(%Notification{}, %{type: 1, target_id: thread.id, resource_name: thread.title})
       |> Ecto.Changeset.put_assoc(:receiver, [author])
 
       Multi.insert(result, :notification, notification)
@@ -562,6 +562,11 @@ defmodule Hello.Forum do
 
   """
   def delete_notification(%Notification{} = notification) do
+
+    result = Members_Notification
+    |> where(notification_id: ^notification.id)
+    |> Repo.delete_all()
+
     Repo.delete(notification)
   end
 
