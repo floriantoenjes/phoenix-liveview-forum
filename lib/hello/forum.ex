@@ -549,6 +549,10 @@ defmodule Hello.Forum do
     |> Repo.update!()
   end
 
+  def unsubscribe_from_thread(thread, author) do
+    Repo.delete_all(from ts in "members_subscribed_threads", where: ts.thread_id == ^thread.id and ts.member_id == ^author.id, select: [ts.id, ts.member_id, ts.thread_id])
+  end
+
   @doc """
   Deletes a notification.
 

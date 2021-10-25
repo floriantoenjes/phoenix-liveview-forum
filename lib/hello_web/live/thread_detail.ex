@@ -28,6 +28,12 @@ defmodule HelloWeb.ThreadDetailLive do
     {:noreply, assign(socket, :thread, Hello.Forum.get_thread!(socket.assigns.thread.id))}
   end
 
+  def handle_event("unsubscribe", _params, socket) do
+    Forum.unsubscribe_from_thread(socket.assigns.thread, socket.assigns.author)
+
+    {:noreply, assign(socket, :thread, Hello.Forum.get_thread!(socket.assigns.thread.id))}
+  end
+
   def handle_info(%{event: "thread:new_post"}, socket) do
     thread = Hello.Forum.get_thread!(socket.assigns.thread.id)
     {:noreply, assign(socket, :thread, thread)}
