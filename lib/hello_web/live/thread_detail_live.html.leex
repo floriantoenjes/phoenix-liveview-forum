@@ -25,11 +25,12 @@
     <%= submit "Create Post", class: "btn-primary mb-4"%>
     </form>
 </div>
-
-<%= form_for :subscribe_to_thread, "#", [phx_submit: :subscribe]%>
-    <%= submit "Subscribe", class: "link py-3" %>
-</form>
-
-<%= form_for :unsubscribe_from_thread, "#", [phx_submit: :unsubscribe]%>
-<%= submit "Unsubscribe", class: "link py-3" %>
-</form>
+<%= if member_has_subscribed(@thread, @author) == false do %>
+    <%= form_for :subscribe_to_thread, "#", [phx_submit: :subscribe]%>
+        <%= submit "Subscribe", class: "link py-3" %>
+    </form>
+<% else %>
+    <%= form_for :unsubscribe_from_thread, "#", [phx_submit: :unsubscribe]%>
+        <%= submit "Unsubscribe", class: "link py-3" %>
+    </form>
+<% end %>

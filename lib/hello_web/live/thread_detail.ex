@@ -39,4 +39,8 @@ defmodule HelloWeb.ThreadDetailLive do
     {:noreply, assign(socket, :thread, thread)}
   end
 
+  def member_has_subscribed(thread, author) do
+    Enum.any?(thread.subscribed_users, fn member -> member.id == author.id end)
+  end
+
 end
