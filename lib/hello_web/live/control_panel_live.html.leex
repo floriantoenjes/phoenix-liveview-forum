@@ -4,7 +4,7 @@
     <%= for subscribed_thread <- @subscribed_threads do %>
         <div class="flex flex-row justify-between mb-4">
             <p><%= subscribed_thread.title %></p>
-            <button type="button" class="btn-primary text-sm">Unsubscribe</button>
+            <button type="button" class="btn-primary text-sm" phx-click="unsubscribe" phx-value-thread-id="<%= subscribed_thread.id %>">Unsubscribe</button>
         </div>
     <% end %>
 </div>
