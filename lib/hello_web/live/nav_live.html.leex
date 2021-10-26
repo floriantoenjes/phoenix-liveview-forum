@@ -3,7 +3,11 @@
     <div id="sideMenu" x-data="{ menuOpen: false, navOpen: false}" class="ml-auto">
         <div class="flex">
 
-            <div class="mr-4 mt-1 notification-bell relative text-blue-500" x-on:click="navOpen = !navOpen">
+            <div class="mr-4 mt-1 notification-bell relative text-blue-500"
+                    <%= if Enum.count(@notifications) > 0 do %>
+                         x-on:click="navOpen = !navOpen"
+                    <% end %>
+            >
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" width="28px" height="28px" fill="none"
                      viewBox="0 0 28 28" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
