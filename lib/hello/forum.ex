@@ -543,6 +543,10 @@ defmodule Hello.Forum do
     |> Repo.update()
   end
 
+  def list_subscribed_threads(author) do
+    Repo.preload(author, :subscribed_threads).subscribed_threads
+  end
+
   def subscribe_to_thread(thread, author) do
     Repo.preload(thread, :subscribed_users)
     |> Ecto.Changeset.change()

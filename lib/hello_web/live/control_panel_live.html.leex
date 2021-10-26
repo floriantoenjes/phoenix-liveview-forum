@@ -1,0 +1,10 @@
+<div class="m-4">
+    <h4>Your subscribed threads:</h4>
+    <hr class="my-3">
+    <%= for subscribed_thread <- @subscribed_threads do %>
+        <div class="flex flex-row justify-between mb-4">
+            <p><%= subscribed_thread.title %></p>
+            <button type="button" class="btn-primary text-sm">Unsubscribe</button>
+        </div>
+    <% end %>
+</div>

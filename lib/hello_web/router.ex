@@ -49,7 +49,6 @@ defmodule HelloWeb.Router do
   end
 
   scope "/notifications",  HelloWeb do
-
     pipe_through [:browser, :authenticate_user, :require_existing_author]
 
     live "/", NotificationLive.Index, :index
@@ -57,6 +56,12 @@ defmodule HelloWeb.Router do
     live "/edit/:id", NotificationLive.Index, :edit
     live "/:id", NotificationLive.Show, :show
     live "/:id", NotificationLive.Show, :edit
+  end
+
+  scope "/control-panel", HelloWeb do
+    pipe_through [:browser, :authenticate_user, :require_existing_author]
+
+    live "/", ControlPanelLive
   end
 
   # Enables LiveDashboard only for development

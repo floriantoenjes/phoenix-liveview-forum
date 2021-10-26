@@ -71,6 +71,8 @@
             <div class="mt-6 text-center">
                 <%= live_redirect "Home", to: Routes.live_path(@socket, HelloWeb.BoardsLive), class: "block link mr-1 pb-3" %>
                 <hr>
+                <%= live_redirect "Control Panel", to: Routes.live_path(@socket, HelloWeb.ControlPanelLive), class: "block link mr-1 py-3" %>
+                <hr>
                 <%= if @author != nil do %>
                     <%= form_for :sign_in, Routes.session_path(@socket, :delete), [method: :delete, as: :user], fn _ -> %>
                         <%= submit "Sign out", class: "link py-3" %>
