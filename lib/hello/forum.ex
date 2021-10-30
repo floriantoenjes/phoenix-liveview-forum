@@ -302,8 +302,11 @@ defmodule Hello.Forum do
       Multi.insert(result, :notification, notification)
     end
 
-    result2
-    |> Repo.transaction()
+    if result2 != nil do
+      Repo.transaction(result2)
+    else
+      Repo.transaction(result)
+    end
 
   end
 

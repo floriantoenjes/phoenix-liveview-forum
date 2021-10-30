@@ -1,5 +1,9 @@
 <div class="m-4">
-    <h4>Your subscribed threads:</h4>
+    <%= if Enum.count(@subscribed_thread) < 1 do %>
+        <h4>You don't have any thread subscriptions.</h4>
+    <% else %>
+        <h4>Your subscribed threads:</h4>
+    <% end %>
     <hr class="my-3">
     <%= for subscribed_thread <- @subscribed_threads do %>
         <div class="flex flex-row justify-between mb-4">

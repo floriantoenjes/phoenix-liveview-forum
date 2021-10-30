@@ -10,7 +10,7 @@
             <%= password_input f, :password, placeholder: "Password", class: "block input my-4" %>
 
             <div class="flex justify-around mt-16">
-                <%= button("Back", to: "/", method: :get, class: "btn-secondary") %>
+                <%= button("Back", to: "/", method: :get, class: "btn-secondary", type: "button") %>
                 <%= submit "Login", class: "btn-primary" %>
             </div>
             <% end %>
