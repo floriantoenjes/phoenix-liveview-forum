@@ -58,6 +58,16 @@ defmodule HelloWeb.Router do
     live "/:id", NotificationLive.Show, :edit
   end
 
+  scope "/messages", HelloWeb do
+    pipe_through [:browser, :authenticate_user, :require_existing_author]
+
+    live "/", MessageLive.Index, :index
+    live "/new", MessageLive.Index, :new
+    live "/edit/:id", MessageLive.Index, :edit
+    live "/:id", MessageLive.Show, :show
+    live "/:id", MessageLive.Show, :edit
+  end
+
   scope "/control-panel", HelloWeb do
     pipe_through [:browser, :authenticate_user, :require_existing_author]
 
