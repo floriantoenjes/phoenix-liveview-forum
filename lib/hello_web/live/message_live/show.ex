@@ -4,8 +4,8 @@ defmodule HelloWeb.MessageLive.Show do
   alias Hello.Forum
 
   @impl true
-  def mount(_params, _session, socket) do
-    {:ok, socket}
+  def mount(_params, session, socket) do
+    {:ok, Forum.assign_session_defaults_to_socket(socket, session)}
   end
 
   @impl true

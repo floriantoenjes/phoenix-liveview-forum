@@ -3,7 +3,9 @@
     <div id="sideMenu" x-data="{ menuOpen: false, navOpen: false}" class="ml-auto">
         <div class="flex">
 
-            <div class="mr-4 mt-1 notification-bell relative text-blue-500"
+            <div class="mr-4 mt-1 notification-bell relative <%= if Enum.count(@notifications) > 0 do %>
+              text-blue-500
+            <% end  %>"
                     <%= if Enum.count(@notifications) > 0 do %>
                          x-on:click="navOpen = !navOpen"
                     <% end %>

@@ -5,8 +5,8 @@ defmodule HelloWeb.MessageLive.Index do
   alias Hello.Forum.Message
 
   @impl true
-  def mount(_params, %{"current_author" => author}, socket) do
-    {:ok, socket |> assign(:messages, list_messages()) |> assign(:author, author)}
+  def mount(_params, session, socket) do
+    {:ok, Forum.assign_session_defaults_to_socket(socket, session) |> assign(:messages, list_messages())}
   end
 
   @impl true

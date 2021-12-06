@@ -547,7 +547,7 @@ defmodule Hello.Forum do
   end
 
   def list_subscribed_threads(author) do
-    Repo.preload(author, :subscribed_threads).subscribed_threads
+    Repo.preload(author, :subscribed_threads).subscribed_threads |> Repo.preload(:board)
   end
 
   def subscribe_to_thread(thread, author) do
@@ -689,5 +689,9 @@ defmodule Hello.Forum do
   """
   def change_message(%Message{} = message, attrs \\ %{}) do
     Message.changeset(message, attrs)
+  end
+
+  def assign_session_defaults_to_socket(socket, %{"current_author" => author}) do
+    socket |> Phoenix.LiveView.assign(:author, author)
   end
 end

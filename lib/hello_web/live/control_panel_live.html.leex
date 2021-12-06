@@ -13,7 +13,7 @@
         <hr class="my-3">
         <%= for subscribed_thread <- @subscribed_threads do %>
             <div class="flex flex-row justify-between mb-4">
-                <p><%= subscribed_thread.title %></p>
+                <span class="link"><%= live_patch String.to_atom(subscribed_thread.title), to: Routes.live_path(@socket, HelloWeb.ThreadDetailLive, subscribed_thread.board.id, subscribed_thread.id) %></span>
                 <button type="button" class="btn-primary text-sm" phx-click="unsubscribe" phx-value-thread-id="<%= subscribed_thread.id %>">Unsubscribe</button>
             </div>
         <% end %>
