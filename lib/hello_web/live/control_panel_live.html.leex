@@ -1,14 +1,35 @@
-<div class="m-4">
-    <%= if Enum.count(@subscribed_threads) < 1 do %>
-        <h4>You don't have any thread subscriptions.</h4>
-    <% else %>
-        <h4>Your subscribed threads:</h4>
-    <% end %>
-    <hr class="my-3">
-    <%= for subscribed_thread <- @subscribed_threads do %>
+<div class="m-4" x-data="{ activeTab: 'threads'}">
+    <div class="mb-5">
+        <button type="button" x-bind:class="activeTab === 'threads' ? 'btn-primary' : 'btn-secondary'" x-on:click="activeTab = 'threads'">Threads</button>
+        <button type="button" x-bind:class="activeTab === 'messages' ? 'btn-primary' : 'btn-secondary'" x-on:click="activeTab = 'messages'">Messages</button>
+    </div>
+
+    <div x-show="activeTab === 'threads'">
+        <%= if Enum.count(@subscribed_threads) < 1 do %>
+            <h4>You don't have any thread subscriptions.</h4>
+        <% else %>
+            <h4>Your subscribed threads:</h4>
+        <% end %>
+        <hr class="my-3">
+        <%= for subscribed_thread <- @subscribed_threads do %>
+            <div class="flex flex-row justify-between mb-4">
+                <p><%= subscribed_thread.title %></p>
+                <button type="button" class="btn-primary text-sm" phx-click="unsubscribe" phx-value-thread-id="<%= subscribed_thread.id %>">Unsubscribe</button>
+            </div>
+        <% end %>
+    </div>
+
+    <div x-show="activeTab === 'messages'">
+        <%= if Enum.count(@messages) < 1 do %>
+            <h4>You don't have any messages.</h4>
+        <% else %>
+            <h4>Your messages:</h4>
+        <% end %>
+        <hr class="my-3">
+        <%= for message <- @messages do %>
         <div class="flex flex-row justify-between mb-4">
-            <p><%= subscribed_thread.title %></p>
-            <button type="button" class="btn-primary text-sm" phx-click="unsubscribe" phx-value-thread-id="<%= subscribed_thread.id %>">Unsubscribe</button>
+            <span class="link"><%= live_patch String.to_atom(message.subject), to: Routes.message_show_path(@socket, :show, message) %></span>
         </div>
-    <% end %>
+        <% end %>
+    </div>
 </div>

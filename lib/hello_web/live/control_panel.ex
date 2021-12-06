@@ -6,8 +6,9 @@ defmodule HelloWeb.ControlPanelLive do
   def mount(_params, %{"current_author" => author}, socket) do
 
     subscribed_threads = Forum.list_subscribed_threads(author)
+    messages = Forum.list_messages()
 
-    {:ok, socket |> assign(:author, author) |> assign(:subscribed_threads, subscribed_threads)}
+    {:ok, socket |> assign(:author, author) |> assign(:subscribed_threads, subscribed_threads) |> assign(:messages, messages)}
   end
 
   def handle_event("unsubscribe", %{"thread-id" => thread_id}, socket) do
