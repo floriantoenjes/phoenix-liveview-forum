@@ -1,0 +1,10 @@
+<h1>Members</h1>
+
+<ul>
+    <%= for user <- @users do %>
+        <li>
+            <p><%= user.name %></p>
+            <%= link "Send Message", to: Routes.message_index_path(@socket,:new)  %>
+        </li>
+    <% end %>
+</ul>

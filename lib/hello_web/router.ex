@@ -21,6 +21,7 @@ defmodule HelloWeb.Router do
 
 #    get "/", PageController, :index
     live "/", BoardsLive
+    live "/members", MembersLive
 
     resources "/users", UserController
     resources "/sessions", SessionController, only: [:new, :create, :delete], singleton: true
