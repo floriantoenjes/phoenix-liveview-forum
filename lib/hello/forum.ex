@@ -252,6 +252,26 @@ defmodule Hello.Forum do
 
   end
 
+  def list_posts_paginated(board_id, thread_id, page) do
+    thread = case Thread |> where(board_id: ^board_id) |> Repo.get(thread_id) do
+      nil -> nil
+      th -> th
+    end
+
+    cond do
+      thread == nil -> []
+      thread != nil -> Repo.all(from(p in Post, where: p.thread_id == ^thread.id) |> paginate(page, 10) |> preload(author: [user: :credential]))
+    end
+  end
+
+  def get_post_count(thread_id) do
+    query = from(p in Post,
+      where: p.thread_id == ^thread_id,
+      select: count(p.id))
+
+    Repo.all(query)
+  end
+
   @doc """
   Gets a single post.
 
@@ -693,5 +713,13 @@ defmodule Hello.Forum do
 
   def assign_session_defaults_to_socket(socket, %{"current_author" => author}) do
     socket |> Phoenix.LiveView.assign(:author, author)
+  end
+
+  def paginate(query, page, per_page) do
+    offset_by = page * per_page
+
+    query
+    |> limit(^per_page)
+    |> offset(^offset_by)
   end
 end

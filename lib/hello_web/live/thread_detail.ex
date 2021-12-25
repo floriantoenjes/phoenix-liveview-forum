@@ -9,9 +9,39 @@ defmodule HelloWeb.ThreadDetailLive do
 
   def mount(%{"id" => board_id, "thread_id" => thread_id}, %{"current_author" => author}, socket) do
     thread = Forum.get_thread!(thread_id)
+    posts = Forum.list_posts_paginated(board_id, thread_id, 0)
+
     changeset = Forum.change_post(%Post{})
 
-    {:ok, socket |> assign(:author, author) |> assign(:board_id, board_id) |> assign(:thread, thread) |> assign(:changeset, changeset)}
+    total_posts = List.first(Forum.get_post_count(thread_id))
+    page_count = trunc(Float.ceil(total_posts / 10))
+    pages = Enum.to_list(1..page_count)
+
+    {:ok, socket |> assign(:author, author)
+          |> assign(:board_id, board_id)
+          |> assign(:thread, thread)
+          |> assign(:changeset, changeset)
+          |> assign(:posts, posts)
+          |> assign(:pages, pages)
+    }
+  end
+
+  def handle_params(%{"id" => board_id, "thread_id" => thread_id, "page" => page}, url, socket) do
+    posts = Forum.list_posts_paginated(board_id, thread_id, String.to_integer(page))
+    {:noreply, socket |> assign(:posts, posts)}
+  end
+
+  def handle_params(%{"id" => board_id, "thread_id" => thread_id}, url, socket) do
+    posts = Forum.list_posts_paginated(board_id, thread_id, 0)
+    {:noreply, socket |> assign(:posts, posts)}
+  end
+
+  def handle_event("changePage", %{"page" => page}, socket) do
+
+
+    posts = Forum.list_posts_paginated(socket.assigns.board_id, socket.assigns.thread.id, String.to_integer(page))
+
+    {:noreply, socket |> assign(:posts, posts)}
   end
 
   def handle_event("createPost", %{"post" => post_params}, socket) do

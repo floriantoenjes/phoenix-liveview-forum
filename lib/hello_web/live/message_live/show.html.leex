@@ -1,4 +1,4 @@
-<h1>Show Message</h1>
+
 
 <%= if @live_action in [:edit] do %>
   <%= live_modal @socket, HelloWeb.MessageLive.FormComponent,
@@ -9,10 +9,9 @@
     return_to: Routes.message_show_path(@socket, :show, @message) %>
 <% end %>
 
-<div>
-    <h4><%= @message.subject %></h4>
-    <p><%= @message.content %></p>
+<div class="mx-4">
+    <h4 class="text-lg mb-3"><%= @message.subject %></h4>
+    <p class="border p-2"><%= @message.content %></p>
 </div>
 
-<span><%= live_patch "Edit", to: Routes.message_show_path(@socket, :edit, @message), class: "button" %></span>
-<span><%= live_redirect "Back", to: Routes.message_index_path(@socket, :index) %></span>
+<a class="link" href="">Reply</a>

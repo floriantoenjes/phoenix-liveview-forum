@@ -5,7 +5,7 @@
 </h1>
 <hr class="mb-4">
 
-<%= for post <- @thread.posts do %>
+<%= for post <- @posts do %>
 <div class="mb-5 mx-4">
     <div class="text-sm"><%= post.author.user.name %> at <%= post.inserted_at %></div>
     <div class="card">
@@ -13,6 +13,12 @@
     </div>
 </div>
 <% end %>
+
+<div> Page:
+<%= for page <- @pages do %>
+    <%= live_patch Integer.to_string(page), to: Routes.live_path(@socket, HelloWeb.ThreadDetailLive, @board_id, @thread) <> "?page=" <> Integer.to_string(page - 1), class: "link" %>
+<% end %>
+</div>
 
 <div class="mx-4">
     <%= f = form_for @changeset, "#", [phx_submit: :createPost] %>
