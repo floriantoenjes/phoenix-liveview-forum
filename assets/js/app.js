@@ -18,8 +18,19 @@ import topbar from "topbar"
 import {LiveSocket} from "phoenix_live_view"
 
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
+
+let Hooks = {}
+Hooks.PageChange = {
+    mounted() {
+       this.el.addEventListener('click', () => {
+           window.scrollTo(0, 0);
+       })
+    }
+}
+
 let liveSocket = new LiveSocket("/live", Socket, {
     params: {_csrf_token: csrfToken},
+    hooks: Hooks,
     dom: {
         onBeforeElUpdated(from, to){
             if(from._x_dataStack){ window.Alpine.clone(from, to) }

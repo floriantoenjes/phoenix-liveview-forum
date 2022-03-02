@@ -16,7 +16,11 @@
 
 <div> Page:
 <%= for page <- @pages do %>
-    <%= live_patch Integer.to_string(page), to: Routes.live_path(@socket, HelloWeb.ThreadDetailLive, @board_id, @thread) <> "?page=" <> Integer.to_string(page - 1), class: "link" %>
+    <%= if Integer.to_string(page) != @current_page do %>
+        <%= live_patch Integer.to_string(page), to: Routes.live_path(@socket, HelloWeb.ThreadDetailLive, @board_id, @thread) <> "?page=" <> Integer.to_string(page), "phx-hook": "PageChange", id: "page-btn-" <> Integer.to_string(page), class: "link" %>
+    <% else %>
+        <span><%= page %></span>
+    <% end %>
 <% end %>
 </div>
 

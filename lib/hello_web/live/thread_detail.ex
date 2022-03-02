@@ -23,12 +23,13 @@ defmodule HelloWeb.ThreadDetailLive do
           |> assign(:changeset, changeset)
           |> assign(:posts, posts)
           |> assign(:pages, pages)
+          |> assign(:current_page, 1)
     }
   end
 
   def handle_params(%{"id" => board_id, "thread_id" => thread_id, "page" => page}, url, socket) do
-    posts = Forum.list_posts_paginated(board_id, thread_id, String.to_integer(page))
-    {:noreply, socket |> assign(:posts, posts)}
+    posts = Forum.list_posts_paginated(board_id, thread_id, (String.to_integer(page) - 1))
+    {:noreply, socket |> assign(:posts, posts) |> assign(:current_page, page)}
   end
 
   def handle_params(%{"id" => board_id, "thread_id" => thread_id}, url, socket) do
