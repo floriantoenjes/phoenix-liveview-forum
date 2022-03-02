@@ -38,8 +38,6 @@ defmodule HelloWeb.ThreadDetailLive do
   end
 
   def handle_event("changePage", %{"page" => page}, socket) do
-
-
     posts = Forum.list_posts_paginated(socket.assigns.board_id, socket.assigns.thread.id, String.to_integer(page))
 
     {:noreply, socket |> assign(:posts, posts)}
@@ -50,7 +48,9 @@ defmodule HelloWeb.ThreadDetailLive do
 
     HelloWeb.Endpoint.broadcast("threads", "thread:new_post", "")
 
-    {:noreply, assign(socket, :thread, Hello.Forum.get_thread!(socket.assigns.thread.id))}
+    posts = Forum.list_posts_paginated(socket.assigns.board_id, socket.assigns.thread.id, String.to_integer(socket.assigns.current_page) - 1)
+
+    {:noreply, socket |> assign(:thread, Hello.Forum.get_thread!(socket.assigns.thread.id)) |> assign(:posts, posts)}
   end
 
   def handle_event("subscribe", _params, socket) do
