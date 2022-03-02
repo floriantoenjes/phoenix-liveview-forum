@@ -40,11 +40,12 @@
                             <a phx-click="mark_notification_read"
                                phx-target="#navigation"
                                phx-value-notification-id="<%= notification.id %>"
-                               class="text-gray-700 block px-4 py-2 text-sm cursor-pointer">
+                               class="text-gray-700 block px-4 py-2 text-sm cursor-pointer text-center">
                                 <%= "New post in " <> notification.resource_name %>
                             </a>
                         </div>
                     <% end %>
+                    <a class="text-blue-500 block mx-auto px-4 py-2 cursor-pointer text-center text-sm">Clear Notifications</a>
                 </div>
             </div>
 
