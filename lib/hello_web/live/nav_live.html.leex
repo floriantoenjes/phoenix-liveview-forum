@@ -45,7 +45,8 @@
                             </a>
                         </div>
                     <% end %>
-                    <a phx-click="clear_notifications"
+                    <a x-on:click="navOpen = false"
+                            phx-click="clear_notifications"
                        phx-target="#navigation"
                             class="text-blue-500 block mx-auto px-4 py-2 cursor-pointer text-center text-sm">Clear Notifications</a>
                 </div>
