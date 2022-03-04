@@ -26,7 +26,7 @@ defmodule HelloWeb.ThreadDetailLive do
           |> assign(:changeset, changeset)
           |> assign(:posts, posts)
           |> assign(:pages, pages)
-          |> assign(:current_page, 1)
+          |> assign(:current_page, "1")
     }
   end
 
