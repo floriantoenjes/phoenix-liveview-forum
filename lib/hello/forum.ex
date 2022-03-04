@@ -602,6 +602,20 @@ defmodule Hello.Forum do
     Repo.delete(notification)
   end
 
+  def delete_all_notifications_by_user_id(user_id) do
+    notifications_by_user_query = Members_Notification
+    |> where(member_id: ^user_id)
+
+    notifications_by_user = Repo.all(notifications_by_user_query)
+
+    Repo.delete_all(notifications_by_user_query)
+
+    for nbu <- notifications_by_user do
+      Hello.Forum.get_notification!(nbu.notification_id)
+      |> Repo.delete()
+    end
+  end
+
   @doc """
   Returns an `%Ecto.Changeset{}` for tracking notification changes.
 

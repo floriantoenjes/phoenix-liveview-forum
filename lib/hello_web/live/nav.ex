@@ -42,4 +42,10 @@ defmodule HelloWeb.NavLive do
     {:noreply, redirect(socket, to: get_notification_link(socket, notification))}
   end
 
+  def handle_event("clear_notifications", _, socket) do
+    Hello.Forum.delete_all_notifications_by_user_id(socket.assigns.author.id)
+
+    {:noreply, socket |> assign(:notifications, [])}
+  end
+
 end
