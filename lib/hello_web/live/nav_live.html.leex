@@ -1,5 +1,5 @@
 <div id="navigation" class="flex mx-4 mt-4" xmlns:x-on="http://www.w3.org/1999/xhtml" xmlns:x-transition="http://www.w3.org/1999/xhtml">
-    <h1 class="text-md text-center mb-2 mt-1.5">The Phoenix Forum</h1>
+    <h1 class="text-md text-center mb-2 mt-1.5"><a class="text-blue-500 font-bold" href="/">The Phoenix Forum</a></h1>
     <div id="sideMenu" x-data="{ menuOpen: false, navOpen: false}" class="ml-auto">
         <div class="flex">
 
@@ -52,7 +52,7 @@
                 </div>
             </div>
 
-            <div x-on:click="menuOpen = !menuOpen" class="cursor-pointer relative z-20">
+            <div x-on:click="menuOpen = !menuOpen" class="cursor-pointer relative z-30">
                 <div id="nav-icon3" :class="{ 'open': menuOpen }" class="h-9 mt-1.5">
                     <span></span>
                     <span></span>
@@ -63,8 +63,8 @@
         </div>
 
         <div x-show="menuOpen" x-on:click="menuOpen = false"
-             class="menu-overlay h-full w-full absolute left-0 top-0 bg-black bg-opacity-25" x-cloak></div>
-        <div class="absolute bg-white h-full right-0 shadow top-0 w-5/6"
+             class="menu-overlay h-full w-full absolute left-0 top-0 bg-black bg-opacity-25 z-20" x-cloak></div>
+        <div class="absolute bg-white h-full right-0 shadow top-0 w-5/6 z-20"
              x-cloak
              x-show="menuOpen"
              x-transition:enter="transition duration-500"

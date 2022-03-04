@@ -14,22 +14,27 @@
 </div>
 <% end %>
 
-<div> Page:
-<%= for page <- @pages do %>
-    <%= if Integer.to_string(page) != @current_page do %>
-        <%= live_patch Integer.to_string(page), to: Routes.live_path(@socket, HelloWeb.ThreadDetailLive, @board_id, @thread) <> "?page=" <> Integer.to_string(page), "phx-hook": "PageChange", id: "page-btn-" <> Integer.to_string(page), class: "link" %>
-    <% else %>
-        <span><%= page %></span>
+<div class="px-4 py-3 mb-4 sticky bottom-0 bg-white border-t-2 border-b-2 flex z-10">
+    <div>
+        <span class="mr-3">Page:</span>
+    <%= for page <- @pages do %>
+        <%= if Integer.to_string(page) != @current_page do %>
+            <%= live_patch Integer.to_string(page), to: Routes.live_path(@socket, HelloWeb.ThreadDetailLive, @board_id, @thread) <> "?page=" <> Integer.to_string(page), "phx-hook": "PageChange", id: "page-btn-" <> Integer.to_string(page), class: "link mr-3" %>
+        <% else %>
+            <span class="mr-3"><%= page %></span>
+        <% end %>
     <% end %>
-<% end %>
+    </div>
+    <button class="ml-auto text-blue-500" onclick="window.scrollTo(0, 10000)">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+    </button>
 </div>
 
 <div class="mx-4">
     <%= f = form_for @changeset, "#", [phx_submit: :createPost] %>
-    <div>
-        <%= label f, "Post:" %>
-    </div>
-    <%= textarea f, :content, class: "input mb-4 w-full" %>
+    <%= textarea f, :content, class: "input mb-4 w-full p-2", placeholder: "Your text goes here..." %>
     <%= error_tag f, :content %>
 
     <%= submit "Create Post", class: "btn-primary mb-4"%>
@@ -37,10 +42,10 @@
 </div>
 <%= if member_has_subscribed(@thread, @author) == false do %>
     <%= form_for :subscribe_to_thread, "#", [phx_submit: :subscribe]%>
-        <%= submit "Subscribe", class: "link py-3" %>
+        <%= submit "Subscribe", class: "link py-3 mx-5" %>
     </form>
 <% else %>
     <%= form_for :unsubscribe_from_thread, "#", [phx_submit: :unsubscribe]%>
-        <%= submit "Unsubscribe", class: "link py-3" %>
+        <%= submit "Unsubscribe", class: "link py-3 mx-5" %>
     </form>
 <% end %>
